@@ -1,0 +1,165 @@
+<!-- <core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+    <ScrollContainer id="caddetail_scrollcontainer-seek" width="100%" height="auto" horizontal="true" vertical="true" focusable="true">
+        <Table items="{
+			path: 'EntryFormDataSourceModel>/ApprovalTransaction',
+			sorter: {
+				path: 'Name'
+			}
+		}" id="caddetail_myTable9" class="sapUiSizeCompact sapUiTinyMarginTop" inset="true" sticky="ColumnHeaders,HeaderToolbar" showSeparators="All" showNoData="true">
+            <columns>
+                <Column width="5rem">
+                    <Text text="SNo." />
+                </Column>
+                <Column width="10rem">
+                    <Text text="User" />
+                </Column>
+                <Column width="10rem">
+                    <Text text="Role" />
+                </Column>
+                <Column width="15rem">
+                    <Text text="Stage" />
+                </Column>
+                <Column width="10rem">
+                    <Text text="Start Date" />
+                </Column>
+                <Column width="10rem">
+                    <Text text="End Date" />
+                </Column>
+                <Column width="10rem">
+                    <Text text="Task Status" />
+                </Column>
+                <Column width="10rem">
+                    <Text text="Completion Status" />
+                </Column>
+                <Column width="10rem">
+                    <Text text="Comments" />
+                </Column>
+                <Column width="5rem">
+                    <Text text="Nature" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem vAlign="Middle">
+                    <cells>
+                        <Text text="{EntryFormDataSourceModel>RowNumber}" wrapping="false" />
+                        <Text text="{EntryFormDataSourceModel>UserId/Username}" wrapping="false" />
+                        <Text text="{EntryFormDataSourceModel>UserRoleCode_RoleCode_RoleConstant}" wrapping="false" />
+                        <Text text="{EntryFormDataSourceModel>StageCode_StageCode_StageConstant}" wrapping="false" />
+                        <Text text="{EntryFormDataSourceModel>StartDte}" wrapping="false" />
+                        <Text text="{EntryFormDataSourceModel>EndDte}" wrapping="false" />
+                        <Text text="{EntryFormDataSourceModel>ApprovalStatus}" wrapping="false" />
+                        <Text text="{EntryFormDataSourceModel>RowStatus}" wrapping="false" />
+                        <Text text="{EntryFormDataSourceModel>Comments}" wrapping="false" />
+                        <Text text="{EntryFormDataSourceModel>Type}" wrapping="false" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </ScrollContainer>
+
+</core:FragmentDefinition> -->
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:ui="sap.ui.table"
+    xmlns:rowmodes="sap.ui.table.rowmodes"
+>
+    <ui:TreeTable
+        id="TreeTableCAD"
+        rows="{testdata>/node}"
+        selectionMode="None"
+        width="auto"
+    >
+        <ui:rowMode>
+            <rowmodes:Fixed rowCount="5" />
+        </ui:rowMode>
+        <ui:columns>
+            <ui:Column width="3.125rem">
+                <Label text="Sr No." />
+                <ui:template>
+                    <Text
+                        text="{testdata>rowNumber}"
+                        wrapping="false"
+                    />
+                </ui:template>
+            </ui:Column>
+            <ui:Column width="200px">
+                <Label text="Stage" />
+                <ui:template>
+                    <Text
+                        text="{testdata>name}"
+                        wrapping="false"
+                    />
+                </ui:template>
+            </ui:Column>
+            <ui:Column width="9.375rem">
+                <Label text="Role" />
+                <ui:template>
+                    <Text
+                        text="{testdata>role}"
+                        wrapping="false"
+                    />
+                </ui:template>
+            </ui:Column>
+            <ui:Column width="200px">
+                <Label text="Start Date" />
+                <ui:template>
+                    <Text
+                        text="{testdata>startdate}"
+                        wrapping="false"
+                    />
+                </ui:template>
+            </ui:Column>
+            <ui:Column width="200px">
+                <Label text="End Date" />
+                <ui:template>
+                    <Text
+                        text="{testdata>enddate}"
+                        wrapping="false"
+                    />
+                </ui:template>
+            </ui:Column>
+            <ui:Column width="200px">
+                <Label text="Approval Status" />
+                <ui:template>
+                    <Text
+                        text="{testdata>taskstatus}"
+                        wrapping="false"
+                    />
+                </ui:template>
+            </ui:Column>
+            <ui:Column width="200px">
+                <Label text="Completion Status" />
+                <ui:template>
+                    <Text
+                        text="{testdata>completionstatus}"
+                        wrapping="false"
+                    />
+                </ui:template>
+            </ui:Column>
+            <ui:Column width="200px">
+                <Label text="Comments" />
+                <ui:template>
+                    <Text
+                        text="{testdata>comment}"
+                        wrapping="false"
+                    />
+                </ui:template>
+            </ui:Column>
+            <ui:Column width="9.375rem">
+                <Label text="Nature" />
+                <ui:template>
+                    <Text
+                        text="{testdata>nature}"
+                        wrapping="false"
+                    />
+                </ui:template>
+            </ui:Column>
+        </ui:columns>
+    </ui:TreeTable>
+</core:FragmentDefinition>

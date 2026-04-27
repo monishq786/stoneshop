@@ -1,0 +1,55 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:upload="sap.m.upload"
+    xmlns:u="sap.ui.unified"
+    xmlns:core="sap.ui.core" controllerName="modonecontroller.teamDialog">
+    <Dialog id="teamSelectionDialog" title="Team Users" contentHeight="70%" contentWidth="75%" resizable="true" draggable="true">
+        <VBox>
+            <Table id="teamUserTable" inset="true" items="{teamModel>/value}" class="sapUiContentPadding">
+                <columns>
+                    <Column>
+                        <!-- Add Select All Checkbox in the Header -->
+                        <header>
+                            <CheckBox text="Select All" select=".onSelectAllCheckBox" />
+                        </header>
+                    </Column>
+                    <Column>
+                        <Text text="Name"/>
+                    </Column>
+                    <Column>
+                        <Text text="Department"/>
+                    </Column>
+                    <Column>
+                        <Text text="Role"/>
+                    </Column>
+                    <Column>
+                        <Text text="Product Category"/>
+                    </Column>
+                    <Column>
+                        <Text text="Material Category"/>
+                    </Column>
+
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <CheckBox select=".onCheckBoxSelect" selected="{teamModel>Selected}"/>
+                            <Text text="{teamModel>USERNAME}" />
+                            <Text text="{teamModel>DEPARTMENTNAME}" />
+                            <Text text="{teamModel>USERROLENAME}" />
+                            <Text text="{teamModel>PRODUCTCATEGORYNAME}" />
+                            <Text text="{teamModel>MATERIALCATEGORYNAME}" />
+
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </VBox>
+
+        <buttons>
+            <Button text="Cancel" press="onTeamClose"/>
+            <Button text="Add" press="onSaveTeamData"/>
+        </buttons>
+    </Dialog>
+
+</core:FragmentDefinition>

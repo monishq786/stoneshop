@@ -1,0 +1,172 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns:commons="sap.suite.ui.commons"
+>
+    <VBox>
+        <HBox
+            width="100%"
+            justifyContent="End"
+        >
+            <VBox>
+                <Button
+                    icon="sap-icon://add"
+                    id="caddetail_raiseQuery"
+                    text="{i18n>raiseQuery}"
+                    press="onRaiseQueryPress"
+                />
+            </VBox>
+        </HBox>
+        <ScrollContainer
+            id="scrollCADDetailSeek"
+            width="100%"
+            height="auto"
+            horizontal="true"
+            vertical="true"
+            focusable="true"
+        >
+            <Table
+                items="{
+			path: 'EntryFormDataSourceModel>/SeekAdvice',
+			sorter: {
+				path: 'Name'
+			}
+		}"
+                id="caddetail_cad_seekAdviceTable"
+                class="sapUiSizeCompact sapUiTinyMarginTop"
+                inset="true"
+                sticky="ColumnHeaders,HeaderToolbar"
+                showSeparators="All"
+                showNoData="true"
+            >
+                <columns>
+                    <Column width="3.125rem">
+                        <Label text="{i18n>srNo}" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label
+                            text="{i18n>department}"
+                            labelFor="caddetail_dept"
+                        />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label
+                            text="{i18n>user}"
+                            labelFor="caddetail_user"
+                        />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Text text="{i18n>role}" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label
+                            text="{i18n>query}"
+                            labelFor="caddetail_comment"
+                        />
+                    </Column>
+
+                    <Column width="8.75rem">
+                        <Text text="{i18n>attachment}" />
+                    </Column>
+                    <Column width="4.125rem">
+                        <Text text="{i18n>action}" />
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <Text
+                                text="{EntryFormDataSourceModel>RowNumber}"
+                                wrapping="true"
+                            />
+                            <Input
+                                id="caddetail_dept"
+                                editable="{= ${EntryFormDataSourceModel>CADSeekAdviceGuid} ? false : true }"
+                                required="true"
+                                placeholder="Click to select value"
+                                showValueHelp="true"
+                                value="{EntryFormDataSourceModel>DepartmentName}"
+                                valueHelpRequest="cflForDeptSeek"
+                            />
+                            <Input
+                                id="caddetail_user"
+                                editable="{= ${EntryFormDataSourceModel>CADSeekAdviceGuid} ? false : true }"
+                                required="true"
+                                placeholder="Click to select value"
+                                showValueHelp="true"
+                                valueHelpRequest="cflForUserSeek"
+                                value="{EntryFormDataSourceModel>QuestionToUserName}"
+                            />
+                            <Input
+                                id="caddetail_Role"
+                                value="{EntryFormDataSourceModel>Role/RoleCode}"
+                                placeholder="Enter your role"
+                                editable="false"
+                            />
+                            <Input
+                                id="caddetail_comment"
+                                editable="{= ${EntryFormDataSourceModel>CADSeekAdviceGuid} ? false : true }"
+                                required="true"
+                                value="{EntryFormDataSourceModel>Question}"
+                                width="100%"
+                            />
+                            <!-- <Text text="{EntryFormDataSourceModel>SeekAdviceDocAbsId/DisplayName}" wrapping="true" /> -->
+                            <!-- <HBox  visible="{EntryFormDataSourceModel>isDownloadVisibleSeek}">
+                            <Button id="caddetail_seekAttachBtn" icon="sap-icon://show" press="onViewFile" />
+                            <Button id="caddetail_seekDownloadBtn" icon="sap-icon://download"  press="onDownloadFile" class="sapUiSmallMarginBegin"/>
+                        </HBox>
+                        <HBox>
+                            <u:FileUploader visible="{EntryFormDataSourceModel>isNewRow}" id="caddetail_fileUploader2" multiple="false" name="myFileUpload" change="onFileChangeSeekAdvice" uploadComplete="onUploadComplete" buttonText="Choose File" placeholder="Choose a file to upload" />
+                        </HBox> -->
+
+                            <Button
+                                id="attachFileViewBtnSeekAdviseCAD"
+                                icon="sap-icon://show"
+                                text="View File"
+                                visible="true"
+                                enabled="{= (${EntryFormDataSourceModel>QuestionToUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})?true:(${EntryFormDataSourceModel>QuestionFromUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})?true: !${EntryFormDataSourceModel>CADSeekAdviceGuid} ? true : false }"
+                                press="openAttachmentDialogSeekAdvise"
+                                type="Emphasized"
+                            />
+                            <HBox>
+                                <Button
+                                    id="caddetail_action"
+                                    icon="sap-icon://action"
+                                    type="Emphasized"
+                                    press="openDialog"
+                                    class="sapUiTinyMarginEnd"
+                                    enabled="{= (${EntryFormDataSourceModel>QuestionToUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})?true:(${EntryFormDataSourceModel>QuestionFromUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})?true:false }"
+                                />
+                                <Button
+                                    id="deleteSeekAdvicebtnId"
+                                    icon="sap-icon://delete"
+                                    press="onDeleteSeekAdvice"
+                                    type="Reject"
+                                    enabled="{= (${EntryFormDataSourceModel>QuestionFromUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})? true : !${EntryFormDataSourceModel>CADSeekAdviceGuid} ? true : false}"
+                                />
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </ScrollContainer>
+
+        <HBox
+            width="100%"
+            justifyContent="End"
+        >
+            <VBox>
+                <Button
+                    type="Emphasized"
+                    id="caddetail_CAD_AddSeek"
+                    text="{i18n>addSeekAdvice}"
+                    press="onUploadPressSeekAdvice"
+                    class="sapUiSmallMarginTop"
+                />
+            </VBox>
+        </HBox>
+    </VBox>
+</core:FragmentDefinition>

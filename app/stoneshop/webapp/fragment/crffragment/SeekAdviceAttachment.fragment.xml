@@ -1,0 +1,46 @@
+<core:FragmentDefinition xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:upload="sap.m.upload"
+    xmlns:u="sap.ui.unified"
+    xmlns:core="sap.ui.core" controllerName="modonecontroller.seekDialog">
+    <Dialog id="seekAdviceAttachDialog" title="Seek Advice Upload Files" contentHeight="70%" contentWidth="75%" resizable="true" draggable="true">
+        <VBox class="sapUiTinyMarginTop">
+            <!-- FileUploader -->
+            <u:FileUploader placeholder="Choose a file" id="fileUploadSeekTable" mimeType="text/plain,application/msword,image/png,image/jpeg,application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.wordprocessingml.document,message/rfc822,application/vnd.ms-outlook,application/sla,application/stl,application/dxf,application/STEP,application/iges,application/coreldraw,application/vnd.hp-ux,application/vnd.hp-ux,application/plt,application/acad" sameFilenameAllowed="false" uploadUrl="/upload" multiple="true" change="onFileChangeDialog" class="sapUiSmallMarginBegin sapUiContentPadding" fileType="txt,doc,docx,png,jpg,jpeg,pdf,xls,xlsx,ppt,pptx,eml,msg,stl,STL,dxf,stp,IGS,cdr,hpgl,plt,dwg" maximumFileSize="10240" />
+
+            <!-- Table to Display Files -->
+            <Table id="fileSeekTable" inset="true" items="{AttachModel>/Attachments}" class="sapUiContentPadding">
+                <columns>
+                    <Column>
+                        <Text text="File Name"/>
+                    </Column>
+                    <Column>
+                        <Text text="File Type"/>
+                    </Column>
+                    <Column>
+                        <Text text="Actions"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <Text text="{AttachModel>AttachmentName}"/>
+                            <Text text="{AttachModel>OrgFileExtension}"/>
+                            <HBox>
+                                <Button icon="sap-icon://show" press="onViewFileSeek" class="sapUiSmallMarginBegin"/>
+                                <Button icon="sap-icon://download" press="onDownloadFileSeek" class="sapUiSmallMarginBegin"/>
+                                <Button icon="sap-icon://delete" press="onDeleteDialog" class="sapUiSmallMarginBegin"/>
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </VBox>
+
+        <buttons>
+            <Button text="Cancel" press="onCloseSeekAdviceDialog"/>
+            <Button text="Add" press="onSaveSeekAttachmentData"/>
+        </buttons>
+    </Dialog>
+
+</core:FragmentDefinition>

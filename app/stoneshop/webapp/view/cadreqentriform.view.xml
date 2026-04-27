@@ -1,0 +1,86 @@
+<mvc:XMLView xmlns:mvc="sap.ui.core.mvc"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified" controllerName="modonecontroller.cadrequestentryform" displayBlock="true"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:grid="sap.ui.layout.Grid"
+    xmlns:layout="sap.ui.layout">
+    <m:Page id="cadreqef" title="{i18n>CADtitle}" showNavButton="true" navButtonPress="onPressOfEntryFormCancelButton">
+        <ObjectPageLayout upperCaseAnchorBar="false" id="HeaderObject">
+            <sections>
+                <ObjectPageSection titleUppercase="false" title="Header" id="HeaderSelect">
+
+                    <ObjectPageSubSection title="Header" titleUppercase="false">
+
+                        <m:VBox id="headerSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crfrequestfragment.Header" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+
+
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+
+                <ObjectPageSection titleUppercase="false" title="Dimensions">
+                    <ObjectPageSubSection title="Dimensions" titleUppercase="false">
+                        <m:VBox id="dimensionsSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crfrequestfragment.Dimensions" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+                <ObjectPageSection titleUppercase="false" title="Attachment">
+                    <ObjectPageSubSection title="Attachment" titleUppercase="false">
+                        <m:VBox id="attachmentSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crfrequestfragment.Attachment" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+                <ObjectPageSection titleUppercase="false" title="PDDRRA Meeting">
+                    <ObjectPageSubSection title="PDDRRA Meeting" titleUppercase="false">
+                        <m:VBox id="pddrrameetingSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crfrequestfragment.PDDRRAMeeting" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+                <ObjectPageSection titleUppercase="false" title="Seek Advice">
+                    <ObjectPageSubSection title="Seek Advice" titleUppercase="false">
+                        <m:VBox id="seekadviceSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crfrequestfragment.SeekAdvice" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+                <ObjectPageSection titleUppercase="false" title="Progress">
+                    <ObjectPageSubSection title="Progress" titleUppercase="false">
+                        <m:VBox id="progressSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crfrequestfragment.Progress" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+            </sections>
+        </ObjectPageLayout>
+
+        <m:footer>
+            <m:Toolbar>
+                <m:ToolbarSpacer />
+                <m:FlexBox alignItems="Center" class="sapUiSmallMargin">
+                    <m:Button type="Accept" id="btnApprove" text="{i18n>approve}" press="openDialogApprove"/>
+                    <m:Text width="10px" />
+                    <m:Button id="btnReject" type="Reject" text="{i18n>reject}" press="openDialogReject"/>
+                    <m:Text width="10px" />
+                    <m:Button type="Emphasized" id="btnSave" text="{i18n>save}" press="onUploadPress"/>
+                    <m:Text width="10px" />
+                    <m:Button type="Emphasized" id="btnSubmit" text="{i18n>submit}" press="onUploadPress"/>
+                    <m:Text width="10px" />
+                    <m:Button id="btnPrint" type="Emphasized" text="{i18n>printForm}" press="onRouterClicknewprint" icon="sap-icon://print"/>
+                </m:FlexBox>
+            </m:Toolbar>
+        </m:footer>
+    </m:Page>
+</mvc:XMLView>

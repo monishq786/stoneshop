@@ -1,0 +1,373 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns:commons="sap.suite.ui.commons"
+>
+    <VBox>
+        <FlexBox justifyContent="End">
+            <Button
+                id="caddetail_addSubAssmblyBtn"
+                icon="sap-icon://add"
+                text="{i18n>addSubAssemblyRow}"
+                press="addSubAssmblyRow"
+            />
+        </FlexBox>
+        <ScrollContainer
+            id="caddetail_scrollcontainerSub"
+            width="100%"
+            height="auto"
+            horizontal="true"
+            vertical="true"
+            focusable="true"
+        >
+            <Table
+                items="{
+			path: 'EntryFormDataSourceModel>/SubAssembly',
+			sorter: {
+				path: 'SrNo'
+			}
+		}"
+                id="caddetail_subAssemblyTable"
+                class="sapUiSizeCompact"
+                inset="true"
+                sticky="ColumnHeaders,HeaderToolbar"
+                showSeparators="All"
+                showNoData="true"
+            >
+                <columns>
+                    <Column width="4rem">
+                        <Label text="SNo." />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="Assembly Cad No."
+                            labelFor="caddetail_subAssemblycadNo"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="Assembly Cad Name"
+                            labelFor="caddetail_subAssemblycadName"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="Sub Assembly Name"
+                            labelFor="caddetail_subAssemblydname"
+                        />
+                    </Column>
+                    <!-- <Column width="15rem" >
+                        <Text text="{i18n>filesname}" />
+                    </Column>
+                    <Column width="7rem"  /> -->
+                    <Column width="15rem">
+                        <Label text="Assembly Cad Attachment" />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="Product No"
+                            labelFor="caddetail_subProductNo"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="Product Name"
+                            labelFor="caddetail_subProductName"
+                        />
+                    </Column>
+                    <Column width="12rem">
+                        <Label
+                            text="Manufacturing Process"
+                            labelFor="caddetail_subMfgprocess"
+                        />
+                    </Column>
+                    <Column width="15rem">
+                        <Label
+                            text="Operation Name With Symbols"
+                            labelFor="caddetail_subOpesymbol"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="UOM"
+                            labelFor="caddetail_subUOM"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label text="Remark" />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>length}"
+                            labelFor="caddetail_subDiaLength"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>dLTolerance}"
+                            labelFor="caddetail_subDiaLengthTol"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>width}"
+                            labelFor="caddetail_subDiaWidth"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>dWTolerance}"
+                            labelFor="caddetail_subDiaWidthTol"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>height}"
+                            labelFor="caddetail_subDiaHeight"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>dHTolerance}"
+                            labelFor="caddetail_subDiaHeightTol"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>diameteruom}"
+                            labelFor="caddetail_subDiaUoM"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>dUTolerance}"
+                            labelFor="caddetail_subDiaUoMTol"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>weight}"
+                            labelFor="caddetail_subWeight"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>dWigTolerance}"
+                            labelFor="caddetail_subWeightTol"
+                        />
+                    </Column>
+                    <Column width="10rem">
+                        <Label
+                            text="{i18n>finish}"
+                            labelFor="caddetail_subFinish"
+                        />
+                    </Column>
+                    <Column width="5rem" />
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <Text
+                                id="caddetail_subSNo"
+                                text="{EntryFormDataSourceModel>RowNumber}"
+                            />
+                            <Input
+                                id="caddetail_subAssemblycadNo"
+                                tooltip="{EntryFormDataSourceModel>AssemblyCADNo}"
+                                required="true"
+                                width="130px"
+                                valueHelpRequest=""
+                                value="{EntryFormDataSourceModel>AssemblyCADNo}"
+                                editable="false"
+                            />
+                            <Input
+                                id="caddetail_subAssemblycadName"
+                                tooltip="{EntryFormDataSourceModel>AssemblyCadName}"
+                                required="true"
+                                width="130px"
+                                valueHelpRequest=""
+                                value="{EntryFormDataSourceModel>AssemblyCadName}"
+                                editable="false"
+                            />
+                            <Input
+                                id="caddetail_subAssemblydname"
+                                required="true"
+                                width="130px"
+                                valueHelpRequest=""
+                                value="{EntryFormDataSourceModel>SubAssemblyName}"
+                                editable="true"
+                            />
+                            <!-- <Text text="{EntryFormDataSourceModel>AssemblyCadAttachment/DisplayName}" wrapping="true" /> -->
+                            <!-- <HBox visible="{EntryFormDataSourceModel>isDownloadVisibleSub}">
+                                <Button id="caddetail_subAttachBtn" icon="sap-icon://show" press="onViewFile" />
+                                <Button id="caddetail_subDownloadBtn" icon="sap-icon://download" press="onDownloadFile" class="sapUiSmallMarginBegin"/>
+                            </HBox>
+                            <HBox>
+                                <u:FileUploader id="caddetail_subAssmFile" visible="{EntryFormDataSourceModel>isNewRow}" multiple="false" name="myFileUpload" change=".onFileChangeSubAssembly" uploadComplete="" buttonText="Choose File" placeholder="Choose a file to upload" />
+                            </HBox> -->
+
+                            <Button
+                                id="attachFileViewBtnSubAssemblyCAD"
+                                icon="sap-icon://show"
+                                text="View File"
+                                width="120px"
+                                visible="true"
+                                enabled="true"
+                                press="openAttachmentDialogMainAssembly"
+                                type="Emphasized"
+                            />
+
+                            <Input
+                                id="caddetail_subProductNo"
+                                required="true"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>ProductNo}"
+                                showValueHelp="true"
+                                valueHelpRequest="cflForProductNoSubAssembly"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subProductName"
+                                required="true"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>ProductName}"
+                                tooltip="{EntryFormDataSourceModel>ProductName}"
+                                editable="false"
+                            />
+                            <Input
+                                id="caddetail_subMfgprocess"
+                                required="true"
+                                width="9.375rem"
+                                value="{EntryFormDataSourceModel>ManufacturingName}"
+                                showValueHelp="true"
+                                valueHelpRequest="cflForManufacturingProcessSubAssembly"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subOpesymbol"
+                                required="true"
+                                valueHelpRequest="cflForOperationSubAssembly"
+                                showValueHelp="true"
+                                width="180px"
+                                value="{EntryFormDataSourceModel>OperationProcessName}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subUOM"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>UOMCode}"
+                                editable="true"
+                                showValueHelp="true"
+                                valueHelpRequest="cflForUOMSubAssembly"
+                                required="true"
+                            />
+                            <Input
+                                id="caddetail_subMainRemarks"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>Remarks}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subDiaLength"
+                                required="true"
+                                type="Number"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>LengthUOM}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subDiaLengthTol"
+                                required="true"
+                                type="Number"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>TolLengthUom}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subDiaWidth"
+                                required="true"
+                                type="Number"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>WidthUOM}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subDiaWidthTol"
+                                required="true"
+                                type="Number"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>TolWidthUom}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subDiaHeight"
+                                required="true"
+                                type="Number"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>HeightUOM}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subDiaHeightTol"
+                                required="true"
+                                type="Number"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>TolHeightUom}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subDiaUoM"
+                                required="true"
+                                type="Number"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>DiameterUOM}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subDiaUoMTol"
+                                required="true"
+                                type="Number"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>TolDiameterUom}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subWeight"
+                                required="true"
+                                type="Number"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>WeightUom}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subWeightTol"
+                                required="true"
+                                type="Number"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>TolWeightUom}"
+                                editable="true"
+                            />
+                            <Input
+                                id="caddetail_subFinish"
+                                required="true"
+                                width="130px"
+                                value="{EntryFormDataSourceModel>Finish}"
+                                editable="true"
+                            />
+                            <Button
+                                id="caddetail_subAssemblyDelBtn"
+                                icon="sap-icon://delete"
+                                width="35px"
+                                visible="true"
+                                press="onDeleteSubAssmbly"
+                                type="Reject"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </ScrollContainer>
+    </VBox>
+</core:FragmentDefinition>

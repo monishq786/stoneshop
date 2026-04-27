@@ -1,0 +1,304 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns:table="sap.ui.table"
+    xmlns:commons="sap.suite.ui.commons"
+>
+    <VBox>
+        <FlexBox
+            width="100%"
+            justifyContent="End"
+        >
+            <Button
+                id="ToggleChildRow"
+                text="Expand Child Rows"
+                icon="sap-icon://expand-group"
+                press=".onToggleAllChildProcesses"
+                type="Emphasized"
+                class="sapUiSmallMarginBegin"
+            />
+        </FlexBox>
+        <table:TreeTable
+            id="caddetail_childAssemblyTree"
+            rows="{ path: 'EntryFormDataSourceModel>/MainAssembly/0/ChildAssembly', parameters : { arrayNames:['ChildAssembly', 'ChildProcess'] } }"
+            selectionMode="None"
+            enableColumnReordering="true"
+            useGroupMode="false"
+            toggleOpenState="onToggleOpenState"
+            class="sapUiSizeCompact"
+            showNoData="true"
+            width="auto"
+            enableColumnFreeze="true"
+            rowHeight="40"
+            visibleRowCountMode="Auto"
+            firstVisibleRow="10"
+            minAutoRowCount="5"
+            columnHeaderVisible="true"
+        >
+            <table:columns>
+                <table:Column width="12rem">
+                    <Label text="Item Code" />
+                    <table:template>
+                        <HBox
+                            justifyContent="SpaceBetween"
+                            alignItems="Center"
+                            width="100%"
+                        >
+                            <Button
+                                icon="sap-icon://add"
+                                type="Emphasized"
+                                id="addProcessBtnId"
+                                press=".onAddProcess"
+                                tooltip="Add Process"
+                                visible="{path: 'EntryFormDataSourceModel>', formatter: '.formatAddProcessVisible'}"
+                                width="2rem"
+                                enabled="{EnableChecked>/EnableTempCode}"
+                            />
+                            <Text text="{EntryFormDataSourceModel>Component}" />
+                        </HBox>
+                    </table:template>
+                </table:Column>
+                <table:Column width="15rem">
+                    <Label text="Item Name" />
+                    <table:template>
+                        <Text text="{EntryFormDataSourceModel>ComponentName}" />
+                    </table:template>
+                </table:Column>
+                <table:Column width="8rem">
+                    <Label text="Material Type" />
+                    <table:template>
+                        <Text text="{EntryFormDataSourceModel>Type}" />
+                    </table:template>
+                </table:Column>
+
+                <!-- PROCESS -->
+                <table:Column width="12rem">
+                    <Label
+                        text="Process"
+                        labelFor="caddetail_processInput"
+                    />
+                    <table:template>
+                        <Input
+                            id="caddetail_processInput"
+                            width="9.375rem"
+                            value="{EntryFormDataSourceModel>ProcessName}"
+                            placeholder="Click to select value"
+                            showValueHelp="true"
+                            valueHelpRequest="cflForChildProcess"
+                            visible="{= ${EntryFormDataSourceModel>IsParent} ? false : true }"
+                            required="true"
+                            enabled="{EnableChecked>/EnableTempCode}"
+                        />
+                    </table:template>
+                </table:Column>
+                <table:Column width="10rem">
+                    <Label text="Process Code" />
+                    <table:template>
+                        <Text
+                            text="{EntryFormDataSourceModel>ProcessDescription}"
+                        />
+                    </table:template>
+                </table:Column>
+                <!-- RAW MATERIAL CODE -->
+                <table:Column width="10rem">
+                    <Label
+                        text="Raw Material Code"
+                        labelFor="rawMaterialCodeInput"
+                    />
+                    <table:template>
+                        <Input
+                            id="rawMaterialCodeInput"
+                            type="Text"
+                            width="8rem"
+                            value="{EntryFormDataSourceModel>RawMaterialCode}"
+                            enabled="{EnableChecked>/EnableTempCode}"
+                            visible="{= ${EntryFormDataSourceModel>IsParent} ? true : false}"
+                        />
+                    </table:template>
+                </table:Column>
+                <!-- RAW MATERIAL NAME -->
+                <table:Column width="15rem">
+                    <Label
+                        text="Raw Material Name"
+                        labelFor="rawMaterialNameInput"
+                    />
+                    <table:template>
+                        <Input
+                            id="rawMaterialNameInput"
+                            type="Text"
+                            width="13rem"
+                            value="{EntryFormDataSourceModel>RawMaterialName}"
+                            enabled="{EnableChecked>/EnableTempCode}"
+                            visible="{= ${EntryFormDataSourceModel>IsParent} ? true : false}"
+                        />
+                    </table:template>
+                </table:Column>
+                <!-- DIMENSIONS -->
+                <table:Column width="20rem">
+                    <table:label>
+                        <VBox>
+                            <Text
+                                text="Dimension (Inch)"
+                                textAlign="Center"
+                                width="14rem"
+                            />
+                            <HBox justifyContent="SpaceAround">
+                                <Text
+                                    text="L"
+                                    textAlign="Center"
+                                    width="6rem"
+                                />
+                                <Text
+                                    text="W"
+                                    textAlign="Center"
+                                    width="6rem"
+                                />
+                                <Text
+                                    text="H"
+                                    textAlign="Center"
+                                    width="6rem"
+                                />
+                            </HBox>
+                        </VBox>
+                    </table:label>
+                    <table:template>
+                        <HBox justifyContent="SpaceAround">
+                            <Input
+                                id="dimensionLengthInput"
+                                type="Number"
+                                width="6rem"
+                                value="{EntryFormDataSourceModel>DimensionLength}"
+                                change=".onDimensionOrModelChange"
+                                required="true"
+                                visible="{= ${EntryFormDataSourceModel>IsParent} ? true : false}"
+                                enabled="{EnableChecked>/EnableTempCode}"
+                            />
+                            <Input
+                                id="dimensionWidthInput"
+                                type="Number"
+                                width="6rem"
+                                value="{EntryFormDataSourceModel>DimensionWidth}"
+                                change=".onDimensionOrModelChange"
+                                required="true"
+                                visible="{= ${EntryFormDataSourceModel>IsParent} ? true : false}"
+                                enabled="{EnableChecked>/EnableTempCode}"
+                            />
+                            <Input
+                                id="dimensionHeightInput"
+                                type="Number"
+                                width="6rem"
+                                value="{EntryFormDataSourceModel>DimensionHeight}"
+                                change=".onDimensionOrModelChange"
+                                required="true"
+                                visible="{= ${EntryFormDataSourceModel>IsParent} ? true : false}"
+                                enabled="{EnableChecked>/EnableTempCode}"
+                            />
+                        </HBox>
+                    </table:template>
+                </table:Column>
+
+                <table:Column width="10rem">
+                    <Label
+                        text="RM Quantity"
+                        labelFor="RMQuantity"
+                    />
+                    <table:template>
+                        <Input
+                            id="RMQuantity"
+                            type="Number"
+                            width="8rem"
+                            editable="false"
+                            visible="{= ${EntryFormDataSourceModel>IsParent} ? true : false}"
+                            value="{EntryFormDataSourceModel>RMQuantity}"
+                        />
+                    </table:template>
+                </table:Column>
+
+                <!-- SURFACE AREA -->
+                <!-- <table:Column width="14rem">
+                    <Label
+                        text="Surface Area (Sq. Inch)"
+                        labelFor="surfaceAreaInput"
+                    />
+                    <table:template>
+                        <Input
+                            id="surfaceAreaInput"
+                            type="Number"
+                            width="12rem"
+                            value="{EntryFormDataSourceModel>SurfaceArea}"
+                            visible="{= ${EntryFormDataSourceModel>IsParent} ? true : false}"
+                            enabled="{EnableChecked>/EnableTempCode}"
+                        />
+                    </table:template>
+                </table:Column> -->
+                <table:Column width="14rem">
+                    <Label text="Surface Area (Sq. Inch)" />
+
+                    <table:template>
+                        <Input
+                            type="Number"
+                            width="12rem"
+                            value="{
+                path: 'EntryFormDataSourceModel>SurfaceArea',
+                type: 'sap.ui.model.type.Float'
+            }"
+                            visible="{= ${EntryFormDataSourceModel>IsParent} }"
+                            enabled="{EnableChecked>/EnableTempCode}"
+                            change="onSurfaceAreaChange"
+                        />
+                    </table:template>
+                </table:Column>
+
+                <!-- CHILD PART WEIGHT -->
+                <table:Column width="10rem">
+                    <Label
+                        text="Child Part Weight"
+                        labelFor="childPartWeightInput"
+                    />
+                    <table:template>
+                        <Input
+                            id="childPartWeightInput"
+                            type="Number"
+                            width="8rem"
+                            value="{EntryFormDataSourceModel>ChildPartWeight}"
+                            editable="false"
+                            visible="{= ${EntryFormDataSourceModel>IsParent} ? true : false}"
+                            enabled="{EnableChecked>/EnableTempCode}"
+                        />
+                    </table:template>
+                </table:Column>
+                <!-- UOM -->
+                <table:Column width="8rem">
+                    <Label text="UOM" />
+                    <table:template>
+                        <Text
+                            text="{EntryFormDataSourceModel>ComponentUOMName}"
+                        />
+                    </table:template>
+                </table:Column>
+
+                <!-- ACTION BUTTONS -->
+                <table:Column
+                    label="Action"
+                    width="6rem"
+                >
+                    <table:template>
+                        <HBox justifyContent="SpaceAround">
+                            <Button
+                                icon="sap-icon://delete"
+                                type="Transparent"
+                                id="deleteProcessBtnId"
+                                press=".onDeleteChildRow"
+                                tooltip="Delete Row"
+                                visible="{= ${EntryFormDataSourceModel>IsParent} ? false : true}"
+                                enabled="{EnableChecked>/EnableTempCode}"
+                            />
+                        </HBox>
+                    </table:template>
+                </table:Column>
+            </table:columns>
+        </table:TreeTable>
+    </VBox>
+</core:FragmentDefinition>

@@ -1,0 +1,436 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+    <VBox>
+        <FlexBox justifyContent="End">
+            <Button
+                id="caddetail_matAddBtn"
+                icon="sap-icon://add"
+                text="{i18n>addDrawing}"
+                press="addMaterialRow"
+            />
+        </FlexBox>
+        <ScrollContainer
+            id="scrollDiaCADDetail"
+            width="100%"
+            height="auto"
+            horizontal="true"
+            vertical="true"
+            focusable="true"
+        >
+            <Table
+                id="caddetail_matTable"
+                items="{    path: 'EntryFormDataSourceModel>/Material',    sorter: {     path: 'SrNo'    }   }"
+                class="sapUiSizeCompact"
+                inset="true"
+                sticky="ColumnHeaders,HeaderToolbar"
+                showSeparators="All"
+                showNoData="true"
+            >
+                <columns>
+                    <Column width="1.875rem">
+                        <Text text="{i18n>srNo}" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Text text="Materials" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Text text="Material Category" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Text text="Material Name" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Text text="Finish" />
+                    </Column>
+                    <Column width="3.125rem">
+                        <Text text="Action" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <Text
+                                id="caddetail_srNum1"
+                                text="{EntryFormDataSourceModel>RowNumber}"
+                                wrapping="false"
+                            />
+                            <Text
+                                id="caddetail_materialId"
+                                text="{EntryFormDataSourceModel>MaterialAutoCode}"
+                                wrapping="false"
+                            />
+                            <Input
+                                id="caddetail_materialCategory"
+                                value="{EntryFormDataSourceModel>MaterialCatHanaText}"
+                                placeholder="Click to select value"
+                                showValueHelp="true"
+                                valueHelpRequest="cflForMaterialCategory"
+                                editable="false"
+                            />
+                            <Input
+                                id="caddetail_diaMaterialInput"
+                                value="{EntryFormDataSourceModel>MaterialCatFreeText}"
+                                description=""
+                                editable="false"
+                            />
+                            <Input
+                                id="caddetail_remarksDim"
+                                value="{EntryFormDataSourceModel>Remarks}"
+                                description=""
+                                editable="false"
+                            />
+                            <Button
+                                id="caddetail_MdelBtn1"
+                                icon="sap-icon://delete"
+                                visible="false"
+                                press="onDeleteMaterial"
+                                type="Reject"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </ScrollContainer>
+        <HBox>
+            <Title
+                text="Dimension"
+                level="H2"
+                class="sapUiSmallMarginEnd"
+            />
+        </HBox>
+        <HBox>
+            <CheckBox
+                id="caddetail_diamensionCheckboxID"
+                enabled="true"
+                text="{i18n>mandatory}"
+                select=".onCheckDiamension"
+                selected="{EntryFormDataSourceModel>/isDiamension}"
+            />
+        </HBox>
+        <f:SimpleForm
+            id="caddetail_dimension1"
+            editable="true"
+            layout="ColumnLayout"
+            columnsM="3"
+            columnsL="4"
+            columnsXL="5"
+        >
+            <f:content>
+                <!-- Length -->
+                <Label
+                    id="caddetail_DlengthLbl"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    labelFor="caddetail_Dlength"
+                    text="{i18n>length}"
+                />
+                <Input
+                    id="caddetail_Dlength"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/Length}"
+                    fieldWidth="100%"
+                />
+
+                <Label
+                    id="caddetail_DToleranceLbl"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    labelFor="caddetail_DTolerance"
+                    text="{i18n>dLTolerance}"
+                />
+                <Input
+                    id="caddetail_DTolerance"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/TolLength}"
+                    fieldWidth="100%"
+                />
+
+                <!-- Unit -->
+                <Label
+                    id="caddetail_dUnitLbl"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    labelFor="caddetail_dUnit"
+                    text="{i18n>unitName}"
+                />
+                <Input
+                    id="caddetail_dUnit"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    value="{EntryFormDataSourceModel>/UnitName}"
+                    fieldWidth="100%"
+                    showValueHelp="true"
+                    valueHelpRequest="cflForUoMDimension"
+                />
+
+                <!-- Width -->
+                <Label
+                    id="caddetail_DWidthLbl"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    labelFor="caddetail_Dwidth"
+                    text="{i18n>width}"
+                />
+                <Input
+                    id="caddetail_Dwidth"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/Width}"
+                    fieldWidth="100%"
+                />
+
+                <Label
+                    id="caddetail_DWToleranceLbl"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    labelFor="caddetail_dWTolerance"
+                    text="{i18n>dWTolerance}"
+                />
+                <Input
+                    id="caddetail_dWTolerance"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/TolWidth}"
+                    fieldWidth="100%"
+                />
+
+                <!-- Unit -->
+
+                <Label
+                    id="caddetail_dUnitCodeLbl"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    labelFor="caddetail_dUnitCode"
+                    text="{i18n>unitCode}"
+                />
+                <Input
+                    id="caddetail_dUnitCode"
+                    enabled="true"
+                    editable="false"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    type="Text"
+                    value="{EntryFormDataSourceModel>/UnitCode}"
+                    fieldWidth="100%"
+                />
+
+                <!-- Height -->
+                <Label
+                    id="caddetail_DHeigthLbl"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    labelFor="caddetail_Dheight"
+                    text="{i18n>height}"
+                />
+                <Input
+                    id="caddetail_Dheight"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/Height}"
+                    fieldWidth="100%"
+                />
+
+                <Label
+                    id="caddetail_DHToleranceLbl"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    labelFor="caddetail_dHTolerance"
+                    text="{i18n>dHTolerance}"
+                />
+                <Input
+                    id="caddetail_dHTolerance"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/TolHeight}"
+                    fieldWidth="100%"
+                />
+
+                <!-- Diameter -->
+                <Label
+                    id="caddetail_dDiameterLbl"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    labelFor="caddetail_dDiameter"
+                    text="{i18n>Diameter}"
+                />
+                <Input
+                    id="caddetail_dDiameter"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    type="Number"
+                    editable="false"
+                    value="{EntryFormDataSourceModel>/Diameter}"
+                    fieldWidth="100%"
+                />
+
+                <Label
+                    id="caddetail_dTolDiameterLbl"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    labelFor="caddetail_dTolDiameter"
+                    text="{i18n>TolDiameter}"
+                />
+                <Input
+                    id="caddetail_dTolDiameter"
+                    required="{EntryFormDataSourceModel>/isDiamension}"
+                    type="Number"
+                    editable="false"
+                    value="{EntryFormDataSourceModel>/TolDiameter}"
+                    fieldWidth="100%"
+                />
+            </f:content>
+        </f:SimpleForm>
+
+        <HBox>
+            <Title
+                text="Diameter"
+                level="H2"
+                class="sapUiSmallMarginEnd"
+            />
+        </HBox>
+        <HBox>
+            <CheckBox
+                id="caddetail_diameterCheckboxID"
+                enabled="true"
+                text="{i18n>mandatory}"
+                select=".onCheckDiameter"
+                selected="{EntryFormDataSourceModel>/isDiamter}"
+            />
+        </HBox>
+        <f:SimpleForm
+            id="caddetail_dimension2"
+            editable="true"
+            layout="ColumnLayout"
+            columnsM="3"
+            columnsL="4"
+            columnsXL="5"
+        >
+            <f:content>
+                <Label
+                    id="caddetail_dITopLbl"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    labelFor="caddetail_dITop"
+                    text="{i18n>dITop}"
+                />
+                <Input
+                    id="caddetail_dITop"
+                    enabled="true"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/DiaTop}"
+                    description=""
+                    fieldWidth="100%"
+                />
+                <Label
+                    id="caddetail_dITToleranceLbl"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    labelFor="caddetail_dITTolerance"
+                    text="{i18n>dITTolerance_CAD}"
+                />
+                <Input
+                    id="caddetail_dITTolerance"
+                    enabled="true"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/TolDiaTop}"
+                    description=""
+                    fieldWidth="100%"
+                />
+                <Label
+                    id="caddetail_bottomLbl"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    labelFor="caddetail_bottom"
+                    text="{i18n>bottom}"
+                />
+
+                <Input
+                    id="caddetail_bottom"
+                    enabled="true"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/DiaBottom}"
+                    description=""
+                    fieldWidth="100%"
+                />
+                <Label
+                    id="caddetail_botomTToleranceLbl"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    labelFor="caddetail_dITTolerance"
+                    text="{i18n>dITTolerance_CAD}"
+                />
+                <Input
+                    id="caddetail_BotomTTolerance"
+                    enabled="true"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/TolDiaBottom}"
+                    description=""
+                    fieldWidth="100%"
+                />
+
+                <Label
+                    id="caddetail_dILeftLbl"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    labelFor="caddetail_dILeft"
+                    text="{i18n>dILeft}"
+                />
+                <Input
+                    id="caddetail_dILeft"
+                    enabled="true"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/DiaLeft}"
+                    description=""
+                    fieldWidth="100%"
+                />
+
+                <Label
+                    id="caddetail_dILToleranceLbl"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    labelFor="caddetail_dILTolerance"
+                    text="{i18n>dILTolerance_CAD}"
+                />
+                <Input
+                    id="caddetail_dILTolerance"
+                    enabled="true"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/TolDiaLeft}"
+                    description=""
+                    fieldWidth="100%"
+                />
+
+                <Label
+                    id="caddetail_dIRigthLbl"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    labelFor="caddetail_dIRight"
+                    text="{i18n>dIRight}"
+                />
+                <Input
+                    id="caddetail_dIRight"
+                    enabled="true"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/DiaRight}"
+                    description=""
+                    fieldWidth="100%"
+                />
+
+                <Label
+                    id="caddetail_dIRToleranceLbl"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    labelFor="caddetail_dIRTolerance"
+                    text="{i18n>dIRTolerance_CAD}"
+                />
+                <Input
+                    id="caddetail_dIRTolerance"
+                    enabled="true"
+                    required="{EntryFormDataSourceModel>/isDiamter}"
+                    type="Number"
+                    value="{EntryFormDataSourceModel>/TolDiaRight}"
+                    description=""
+                    fieldWidth="100%"
+                />
+            </f:content>
+        </f:SimpleForm>
+        <TextArea
+            width="100%"
+            value="{EntryFormDataSourceModel>/MaterialComments}"
+            height="120px"
+            id="caddetail_comment1"
+            placeholder="Merchant Remarks"
+        />
+    </VBox>
+</core:FragmentDefinition>

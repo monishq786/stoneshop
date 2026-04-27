@@ -1,0 +1,150 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns:commons="sap.suite.ui.commons"
+>
+    <VBox>
+        <FlexBox justifyContent="End">
+            <Button
+                icon="sap-icon://add"
+                id="raiseQuery"
+                text="{i18n>raiseQuery}"
+                press="addRaiseQuery"
+            />
+        </FlexBox>
+        <ScrollContainer
+            id="scrollCRFSeekAdvice"
+            width="100%"
+            height="auto"
+            horizontal="true"
+            vertical="true"
+            focusable="true"
+        >
+            <Table
+                items="{    path: 'EntryFormDataSourceModel>/SeekAdvice',    sorter: {     path: 'RowNumber'    }   }"
+                id="seekAdviceTable"
+                class="sapUiSizeCompact sapUiTinyMarginTop"
+                inset="true"
+                sticky="ColumnHeaders,HeaderToolbar"
+                showSeparators="All"
+                showNoData="true"
+            >
+                <columns>
+                    <Column width="3.125rem">
+                        <Label text="{i18n>srNo}" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Department" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label
+                            text="User"
+                            labelFor="user"
+                        />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Role" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label
+                            text="Query"
+                            labelFor="comment"
+                        />
+                    </Column>
+                   
+                    <Column width="8.75rem">
+                        <Label text="Attachment" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Reply" />
+                    </Column>
+                    <Column width="3.125rem">
+                        <Text text="Action" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <!-- <Text id="srNum_seek" text="{= ${EntryFormDataSourceModel>/SeekAdvice}.length}" /> -->
+                            <Text
+                                id="srNum_seek"
+                                text="{EntryFormDataSourceModel>RowNumber}"
+                            />
+                            <Input
+                                id="cadSeekDept"
+                                editable="{= ${EntryFormDataSourceModel>CrfSeekAdviceGuid} ? false : true }"
+                                placeholder="Click to select value"
+                                showValueHelp="true"
+                                value="{EntryFormDataSourceModel>DepartmentName}"
+                                valueHelpRequest="cflForDeptSeek"
+                            />
+                            <Input
+                                id="cadSeekUser"
+                                required="true"
+                                editable="{= ${EntryFormDataSourceModel>CrfSeekAdviceGuid} ? false : true }"
+                                placeholder="Click to select value"
+                                showValueHelp="true"
+                                valueHelpRequest="cflForUserSeek"
+                                value="{EntryFormDataSourceModel>QuestionToUserName}"
+                            />
+                            <Input
+                                id="roleInput"
+                                editable="false"
+                                value="{EntryFormDataSourceModel>RoleName}"
+                            />
+                            <!-- <Input id="comment" required="true" value="{EntryFormDataSourceModel>Question}" enabled="{EntryFormDataSourceModel>isQueryInputEnabled}" width="80%" liveChange=".onFieldChange"/> -->
+                            <!-- <Input id="comment" required="true" value="{EntryFormDataSourceModel>Question}" editable="{= ${EntryFormDataSourceModel>CrfSeekAdviceGuid} ? false : true }" width="80%" liveChange=".onFieldChange"/> -->
+                            <Input
+                                id="comment"
+                                required="true"
+                                value="{EntryFormDataSourceModel>Question}"
+                                editable="{= ${EntryFormDataSourceModel>CrfSeekAdviceGuid} ? false : true }"
+                                liveChange=".onFieldChange"
+                            />
+                            <HBox>
+                                <Button
+                                    id="fileUploader2"
+                                    icon="sap-icon://attachment"
+                                    text="Attachment"
+                                    press="openSeekAttachmentDialog"
+                                    enabled="{= (${EntryFormDataSourceModel>QuestionToUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})?true:(${EntryFormDataSourceModel>QuestionFromUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})?true: !${EntryFormDataSourceModel>CrfSeekAdviceGuid} ? true : false }"
+                                    class="sapUiSmallMarginBegin"
+                                />
+                            </HBox>
+                            <!-- <Text text="{EntryFormDataSourceModel>QuestionToUser_UserGuid}"></Text> -->
+                            <!-- <Text text="Hello + {=${EntryFormDataSourceModel>QuestionFromUser_UserGuid}}"></Text> -->
+                            <!-- <Text text="{= (${EntryFormDataSourceModel>QuestionToUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})?true:false }"></Text>  -->
+                            <!-- <Button id="action" icon="sap-icon://action" type="Emphasized" press="openDialog" enabled="{= ${EntryFormDataSourceModel>isReplyEnabled} === 1}" /> -->
+                            <!-- <Button id="action" icon="sap-icon://action" type="Emphasized" press="openDialog" enabled="{= ${EntryFormDataSourceModel>QuestionToUser/UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid}}" /> -->
+                            <Button
+                                id="action"
+                                icon="sap-icon://action"
+                                type="Emphasized"
+                                press="openDialog"
+                                enabled="{= (${EntryFormDataSourceModel>QuestionToUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})?true:(${EntryFormDataSourceModel>QuestionFromUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})?true:false }"
+                            />
+
+                            <Button
+                                icon="sap-icon://delete"
+                                press="onDeleteSeekAdvice"
+                                type="Reject"
+                                enabled="{= (${EntryFormDataSourceModel>QuestionFromUser_UserGuid} === ${EntryFormDataSourceModel>/loginUserID_UserGuid})? true : !${EntryFormDataSourceModel>CrfSeekAdviceGuid} ? true : false}"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </ScrollContainer>
+        <FlexBox justifyContent="End">
+            <Button
+                type="Emphasized"
+                id="addSeek"
+                text="{i18n>addSeekAdvice}"
+                press="onUploadPressSeekAdvice"
+                class="sapUiSmallMarginTop"
+            />
+        </FlexBox>
+    </VBox>
+</core:FragmentDefinition>

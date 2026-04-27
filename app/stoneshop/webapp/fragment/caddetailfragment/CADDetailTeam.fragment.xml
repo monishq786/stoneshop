@@ -1,0 +1,98 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns:commons="sap.suite.ui.commons"
+>
+    <VBox>
+        <FlexBox justifyContent="End">
+            <Button
+                id="CAD_selectUserBtn"
+                icon="sap-icon://employee-lookup"
+                text="Select User"
+                press="openTeamDialog"
+                enabled="true"
+                class="sapUiSmallMarginBegin"
+            />
+        </FlexBox>
+        <ScrollContainer
+            id="CAD_scrollTeam"
+            width="100%"
+            height="auto"
+            horizontal="true"
+            vertical="true"
+            focusable="true"
+        >
+            <Table
+                items="{    path: 'EntryFormDataSourceModel>/Team',    sorter: {     path: 'Name'    }   }"
+                id="CAD_teamTable"
+                class="sapUiSizeCompact"
+                inset="true"
+                sticky="ColumnHeaders,HeaderToolbar"
+                showSeparators="All"
+                showNoData="true"
+                alternateRowColors="true"
+            >
+                <columns>
+                    <Column width="1.875rem">
+                        <Label text="Sr No" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Name" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Role" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Product Category" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Material Category" />
+                    </Column>
+                    <Column width="3.125rem">
+                        <Label text="Action" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <Text
+                                id="CAD_srNo"
+                                text="{EntryFormDataSourceModel>RowNumber}"
+                            />
+                            <Text
+                                id="CAD_name"
+                                text="{EntryFormDataSourceModel>UserName}"
+                            />
+                            <Text
+                                id="CAD_roleTeam"
+                                text="{EntryFormDataSourceModel>RoleName}"
+                            />
+                            <Text
+                                id="CAD_prodCat"
+                                text="{EntryFormDataSourceModel>ProductCategoryName}"
+                            />
+                            <Text
+                                id="CAD_matCat"
+                                text="{EntryFormDataSourceModel>UserMaterialCategoryName}"
+                            />
+
+                            <Button
+                                id="CAD_teamDelBtn"
+                                width="2rem"
+                                icon="sap-icon://delete"
+                                visible="{= !${EntryFormDataSourceModel>CADTeamGuid} }"
+                                press="onDeleteTeam"
+                                type="Reject"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </ScrollContainer>
+        <!-- <FlexBox justifyContent="End">
+            <Button id="confirmTeam" icon="sap-icon://accept" text="Confirm Team" press="" enabled="true" class="sapUiSmallMarginBegin"/>
+        </FlexBox> -->
+    </VBox>
+</core:FragmentDefinition>

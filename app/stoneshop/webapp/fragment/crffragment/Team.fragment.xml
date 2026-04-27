@@ -1,0 +1,104 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns:commons="sap.suite.ui.commons"
+>
+    <VBox>
+        <FlexBox justifyContent="End">
+            <Button
+                id="selectUserBtn"
+                icon="sap-icon://employee-lookup"
+                text="Select User"
+                press="openTeamDialog"
+                enabled="true"
+                class="sapUiSmallMarginBegin"
+            />
+        </FlexBox>
+        <ScrollContainer
+            id="scrollTeam"
+            width="100%"
+            height="auto"
+            horizontal="true"
+            vertical="true"
+            focusable="true"
+        >
+            <Table
+                items="{    path: 'EntryFormDataSourceModel>/Team',    sorter: {     path: 'Name'    }   }"
+                id="teamTable"
+                class="sapUiSizeCompact"
+                inset="true"
+                sticky="ColumnHeaders,HeaderToolbar"
+                showSeparators="All"
+                showNoData="true"
+                alternateRowColors="true"
+            >
+                <columns>
+                    <Column width="3.875rem">
+                        <Label text="Sr No" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Name" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Department" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Role" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Product Category" />
+                    </Column>
+                    <Column width="8.75rem">
+                        <Label text="Material Category" />
+                    </Column>
+                    <Column width="3.125rem">
+                        <Label text="Action" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <Text
+                                id="srNo"
+                                text="{EntryFormDataSourceModel>RowNumber}"
+                            />
+                            <Text
+                                id="name"
+                                text="{EntryFormDataSourceModel>UserName}"
+                            />
+                            <Text
+                                id="department"
+                                text="{EntryFormDataSourceModel>DepartmentName}"
+                            />
+                            <Text
+                                id="roleTeam"
+                                text="{EntryFormDataSourceModel>RoleName}"
+                            />
+                            <Text
+                                id="prodCat"
+                                text="{EntryFormDataSourceModel>ProductCategoryName}"
+                            />
+                            <Text
+                                id="matCat"
+                                text="{EntryFormDataSourceModel>UserMaterialCategoryName}"
+                            />
+                            <Button
+                                id="teamDelBtn"
+                                width="2rem"
+                                icon="sap-icon://delete"
+                                visible="{path: 'EntryFormDataSourceModel>User_UserGuid', formatter: '.isTeamDeleteEnabled'}"
+                                press="onDeleteTeam"
+                                type="Reject"
+                            />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </ScrollContainer>
+        <!-- <FlexBox justifyContent="End">
+            <Button id="confirmTeam" icon="sap-icon://accept" text="Confirm Team" press="" enabled="true" class="sapUiSmallMarginBegin"/>
+        </FlexBox> -->
+    </VBox>
+</core:FragmentDefinition>

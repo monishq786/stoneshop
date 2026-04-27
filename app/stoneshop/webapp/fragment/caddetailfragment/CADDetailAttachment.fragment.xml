@@ -1,0 +1,236 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:l="sap.ui.layout"
+>
+    <VBox>
+        <Title
+            text="Main Product Image"
+            level="H2"
+        />
+        <f:SimpleForm
+            layout="ResponsiveGridLayout"
+            columnsL="1"
+            columnsM="1"
+        >
+            <f:content>
+                <VBox width="100%">
+                    <layoutData>
+                        <l:GridData span="XL12 L12 M12 S12" />
+                    </layoutData>
+                    <ScrollContainer
+                        id="scrollImage"
+                        width="100%"
+                        focusable="true"
+                    >
+                        <Table
+                            id="crfImageTable"
+                            class="sapUiSizeCompact"
+                            inset="true"
+                            sticky="ColumnHeaders,HeaderToolbar"
+                            showSeparators="All"
+                            showNoData="true"
+                        >
+                            <columns>
+                                <Column width="3.125rem">
+                                    <Text text="File Name" />
+                                </Column>
+
+                                <Column width="3.125rem">
+                                    <Text text="Upload" />
+                                </Column>
+                                <Column width="3.125rem">
+                                    <Text text="View File" />
+                                </Column>
+                                <Column width="3.125rem">
+                                    <Text text="Download File" />
+                                </Column>
+                                <Column width="3.125rem">
+                                    <Text text="Delete" />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <!-- File Name Row -->
+                                <ColumnListItem>
+                                    <Text
+                                        text="{EntryFormDataSourceModel>/MainAttachment/Attachment/OrgFileName}"
+                                    />
+
+                                    <!-- Upload Row -->
+                                    <u:FileUploader
+                                        change="onMainFileChange"
+                                        width="100%"
+                                        placeholder="Choose a file"
+                                        multiple="false"
+                                        sameFilenameAllowed="false"
+                                        maximumFileSize="10240"
+                                        uploadUrl="/upload"
+                                        fileType="txt,doc,docx,png,jpg,jpeg,pdf,xls,xlsx,ppt,pptx"
+                                    />
+
+                                    <!-- Action Row -->
+
+                                    <Button
+                                        id="viewImageBtn"
+                                        icon="sap-icon://show"
+                                        text="View Image"
+                                        width="120px"
+                                        visible="true"
+                                        enabled="true"
+                                        press="onViewImage"
+                                        type="Emphasized"
+                                    />
+                                    <Button
+                                        text="Download"
+                                        icon="sap-icon://download"
+                                        press="onDownloadImage"
+                                    />
+                                    <Button
+                                        id="delete"
+                                        icon="sap-icon://delete"
+                                        width="35px"
+                                        press="onDeleteMainAttachment"
+                                        type="Reject"
+                                    />
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </ScrollContainer>
+                </VBox>
+            </f:content>
+        </f:SimpleForm>
+
+        <Title
+            text="Supporting Images/Documents"
+            level="H2"
+        />
+
+        <f:SimpleForm
+            layout="ResponsiveGridLayout"
+            columnsL="1"
+            columnsM="1"
+        >
+            <f:content>
+                <HBox
+                    justifyContent="End"
+                    visible="{EntryFormDataSourceModel>/isButtonVisible}"
+                >
+                    <Button
+                        id="CAD_addAttachBtnNew"
+                        icon="sap-icon://add"
+                        text="{i18n>addDrawing}"
+                        press="openAttachmentDialog"
+                        enabled="true"
+                        class="sapUiSmallMarginBegin"
+                    />
+                </HBox>
+                <VBox width="100%">
+                    <layoutData>
+                        <l:GridData span="XL12 L12 M12 S12" />
+                    </layoutData>
+                    <ScrollContainer
+                        id="scrollCADAttach"
+                        width="100%"
+                        height="auto"
+                        horizontal="true"
+                        vertical="true"
+                        focusable="true"
+                    >
+                        <Table
+                            id="caddetail_cadTable"
+                            items="{ path: 'EntryFormDataSourceModel>/InspDraw',    sorter: {     path: 'SrNo'    }   }"
+                            class="sapUiSizeCompact"
+                            inset="true"
+                            sticky="ColumnHeaders,HeaderToolbar"
+                            showSeparators="All"
+                            showNoData="true"
+                        >
+                            <columns>
+                                <Column width="3.125rem">
+                                    <Text text="Sr No." />
+                                </Column>
+
+                                <Column width="8.75rem">
+                                    <Text text="Role" />
+                                </Column>
+
+                                <Column width="8.75rem">
+                                    <Text text="User" />
+                                </Column>
+
+                                <Column width="8.75rem">
+                                    <Text text="File" />
+                                </Column>
+
+                                <Column width="8.75rem">
+                                    <Text text="Comment" />
+                                </Column>
+
+                                <Column width="8.75rem">
+                                    <Text text="Approval Status" />
+                                </Column>
+                                <Column width="3.125rem">
+                                    <Text text="Action" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem
+                                    vAlign="Middle"
+                                    highlight="{= ${EntryFormDataSourceModel>RowStatus} === 'REFERENCE' ? 'Success' : 'None' }"
+                                >
+                                    <Text
+                                        id="CAD_srNum_attach"
+                                        text="{EntryFormDataSourceModel>RowNumber}"
+                                    />
+                                    <Text
+                                        id="CAD_roleAttach"
+                                        text="{EntryFormDataSourceModel>User/Role/RoleCode}"
+                                        wrapping="false"
+                                    />
+                                    <Text
+                                        id="CAD_userAttach"
+                                        text="{EntryFormDataSourceModel>User/UserName}"
+                                        wrapping="false"
+                                    />
+                                    <Button
+                                        id="CAD_attachFileViewBtn"
+                                        icon="sap-icon://show"
+                                        text="View File"
+                                        visible="true"
+                                        enabled="true"
+                                        press="openAttachmentDialog"
+                                        type="Emphasized"
+                                    />
+                                    <TextArea
+                                        id="CAD_attachComment"
+                                        value="{EntryFormDataSourceModel>AttachmentRemarks}"
+                                        enabled="false"
+                                        height="3.125rem"
+                                        placeholder="Comments"
+                                        tooltip="{EntryFormDataSourceModel>AttachmentRemarks}"
+                                    />
+                                    <Text
+                                        id="CAD_approvalAttach"
+                                        text="{EntryFormDataSourceModel>ApprovalStatus}"
+                                        wrapping="true"
+                                    />
+                                    <Button
+                                        id="CAD_attachDelBtn"
+                                        icon="sap-icon://delete"
+                                        visible="{= ${EntryFormDataSourceModel>RowStatus} === 'CLOSED' ? false : (${EntryFormDataSourceModel>RowStatus} === 'REFERENCE' ? false : true) }"
+                                        press="onDeleteAttachment"
+                                        type="Reject"
+                                    />
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </ScrollContainer>
+                </VBox>
+            </f:content>
+        </f:SimpleForm>
+    </VBox>
+</core:FragmentDefinition>

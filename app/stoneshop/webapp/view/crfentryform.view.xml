@@ -1,0 +1,97 @@
+<mvc:XMLView xmlns:mvc="sap.ui.core.mvc"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns:u="sap.ui.unified" controllerName="modonecontroller.crfentryform" displayBlock="true"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
+    xmlns:grid="sap.ui.layout.Grid"
+    xmlns:layout="sap.ui.layout">
+    <m:Page id="cadreqef" title="{i18n>CADtitle}" showNavButton="true" navButtonPress="onPressBack">
+        <ObjectPageLayout upperCaseAnchorBar="false" id="HeaderObject">
+            <sections>
+                <ObjectPageSection titleUppercase="false" title="Header" id="HeaderSelect">
+
+                    <ObjectPageSubSection title="Header" titleUppercase="false">
+                        <m:VBox id="headerSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crffragment.Header" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+
+                </ObjectPageSection>
+
+                <ObjectPageSection titleUppercase="false" title="Header" id="TeamSelect">
+
+                    <ObjectPageSubSection title="Team" titleUppercase="false">
+                        <m:VBox id="teamSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crffragment.Team" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+
+                </ObjectPageSection>
+
+                <ObjectPageSection titleUppercase="false" title="Main Product Dimensions">
+                    <ObjectPageSubSection title="Main Product Dimensions" titleUppercase="false">
+                        <m:VBox id="dimensionsSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crffragment.Dimensions" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+                <ObjectPageSection titleUppercase="false" title="Attachment">
+                    <ObjectPageSubSection title="Attachment" titleUppercase="false">
+                        <m:VBox id="attachmentSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crffragment.Attachment" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+                <ObjectPageSection titleUppercase="false" title="PDRM Meeting">
+                    <ObjectPageSubSection title="PDRM Meeting" titleUppercase="false">
+                        <m:VBox id="pddrrameetingSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crffragment.PDDRRAMeeting" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+                <ObjectPageSection titleUppercase="false" title="Seek Advice">
+                    <ObjectPageSubSection title="Seek Advice" titleUppercase="false">
+                        <m:VBox id="seekadviceSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crffragment.SeekAdvice" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+                <ObjectPageSection titleUppercase="false" title="Approval History">
+                    <ObjectPageSubSection title="Approval History" titleUppercase="false">
+                        <m:VBox id="progressSection" class="section">
+                            <core:Fragment fragmentName="modone.fragment.crffragment.Progress" type="XML">
+                            </core:Fragment>
+                        </m:VBox>
+                    </ObjectPageSubSection>
+                </ObjectPageSection>
+            </sections>
+        </ObjectPageLayout>
+
+        <m:footer>
+            <m:Toolbar>
+                <m:ToolbarSpacer />
+                <m:FlexBox alignItems="Center" class="sapUiSmallMargin">
+                    <m:Button type="Accept" id="btnApprove" text="{i18n>approve}" press="openDialogApprove"/>
+                    <m:Text width="10px" />
+                    <m:Button id="btnReject" type="Reject" text="{i18n>reject}" press="openDialogReject"/>
+                    <m:Text width="10px" />
+                    <m:Button id="btnHold" type="Emphasized" text="Hold" press="onUploadPress" icon="sap-icon://pending"/>
+                    <m:Text width="10px" />
+                    <m:Button type="Emphasized" id="btnSave" text="{i18n>draftSave}" press="onUploadPress"/>
+                    <m:Text width="10px" />
+                    <m:Button type="Emphasized" id="btnSubmit" text="{i18n>submit}" press="onUploadPress"/>
+                    <m:Text width="10px" />
+                    <m:Button id="btnPrint" type="Emphasized" text="{i18n>printForm}" press="onRouterClicknewprint" icon="sap-icon://print"/>
+                </m:FlexBox>
+            </m:Toolbar>
+        </m:footer>
+    </m:Page>
+</mvc:XMLView>

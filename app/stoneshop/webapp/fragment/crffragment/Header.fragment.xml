@@ -1,0 +1,620 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:upload="sap.m.upload"
+    xmlns:u="sap.ui.unified"
+>
+    <f:SimpleForm
+        id="header"
+        editable="true"
+        layout="ColumnLayout"
+        columnsM="3"
+        columnsL="4"
+        columnsXL="4"
+    >
+        <f:content>
+            <Label
+                id="reqTypeLbl"
+                required="{EntryFormDataSourceModel>/isRequired}"
+                labelFor="reqType"
+                text="{i18n>reqType}"
+            />
+            <ComboBox
+                id="reqType"
+                required="true"
+                maxWidth="100%"
+                valueState="None"
+                visible="true"
+                editable="true"
+                enabled="true"
+                selectedKey="{EntryFormDataSourceModel>/ReqTyp}"
+                change="onEnableDisableChange"
+                items="{ReqTypeModel>/ReqTypArray}"
+            >
+                <items>
+                    <core:Item
+                        key="{ReqTypeModel>id}"
+                        text="{ReqTypeModel>name}"
+                    />
+                </items>
+            </ComboBox>
+
+            <Label
+                id="crfCategoryLbl"
+                labelFor="crfCategory"
+                text="{i18n>crfCat}"
+            />
+            <ComboBox
+                id="crfCategory"
+                required="true"
+                maxWidth="100%"
+                valueState="None"
+                visible="true"
+                editable="true"
+                enabled="true"
+                selectedKey="{EntryFormDataSourceModel>/CrfCategory}"
+                items="{ReqTypeModel>/CRFCATArray}"
+                selectionChange="getTemplateData"
+                change="onCategoryChange"
+            >
+                <items>
+                    <core:Item
+                        key="{ReqTypeModel>id}"
+                        text="{ReqTypeModel>name}"
+                    />
+                </items>
+            </ComboBox>
+
+            <Label
+                id="oldCadReqLbl"
+                labelFor="oldCadReq"
+                text="{i18n>oldCADReq}"
+            />
+            <Input
+                id="oldCadReq"
+                editable="true"
+                value="{EntryFormDataSourceModel>/OldCrfReqNo}"
+                description=""
+                fieldWidth="100%"
+                showValueHelp="true"
+                valueHelpRequest="cflForOldCadReqNumber"
+            />
+
+            <Label
+                id="cadDetailNumLbl"
+                text="{i18n>caddetailno}"
+            />
+            <Input
+                id="cadDetailNo"
+                value="{EntryFormDataSourceModel>/OldCADNo}"
+                description=""
+                fieldWidth="100%"
+                editable="true"
+                showValueHelp="true"
+                valueHelpRequest="cflForCADDetailNumber"
+            />
+
+            <Label
+                id="cadReqLbl"
+                text="{i18n>cadRequestNumber}"
+            />
+            <Input
+                id="cadReqNo"
+                editable="false"
+                type="Number"
+                value="{EntryFormDataSourceModel>/CrfReqNo}"
+                description=""
+                fieldWidth="100%"
+            />
+
+            <Label
+                id="pdDateLbl"
+                text="{i18n>pdDate}"
+                labelFor="pdDate"
+            />
+            <DatePicker
+                id="pdDate"
+                required="true"
+                valueFormat="yyyy-MM-dd"
+                maxDate="{ path: 'EntryFormDataSourceModel>/maxDate' }"
+                value="{EntryFormDataSourceModel>/PDDate}"
+                displayFormat="dd-MM-yyyy"
+                change=".onDateChange"
+            />
+
+            <Label
+                id="crfReqDateLbl"
+                labelFor="crfReDate"
+                text="{i18n>crfDate}"
+            />
+            <DatePicker
+                id="crfReqDate"
+                required="true"
+                displayFormat="dd-MM-yyyy"
+                editable="false"
+                value="{EntryFormDataSourceModel>/CrfReqDate}"
+            />
+
+            <Label
+                id="cadDeliveryDateLbl"
+                labelFor="cadDeliveryDate"
+                text="{i18n>cadDeliveryDate}"
+            />
+            <DatePicker
+                id="cadDeliveryDate"
+                value="{EntryFormDataSourceModel>/CrfDelDate}"
+                required="true"
+                displayFormat="dd-MM-yyyy"
+                change="getDateValue"
+                enabled="false"
+            />
+
+            <Label
+                id="inputTypeLbl"
+                labelFor="inputType"
+                text="{i18n>inputType}"
+            />
+            <ComboBox
+                id="inputType"
+                required="true"
+                maxWidth="100%"
+                valueState="None"
+                visible="true"
+                editable="true"
+                enabled="true"
+                selectedKey="{EntryFormDataSourceModel>/InputType}"
+                selectionChange=""
+                items="{path:'ReqTypeModel>/inputTypeArray'}"
+            >
+                <items>
+                    <core:Item
+                        key="{ReqTypeModel>id}"
+                        text="{ReqTypeModel>name}"
+                    />
+                </items>
+            </ComboBox>
+
+            <Label
+                id="prodCatLbl"
+                labelFor="prodCatType"
+                text="{i18n>prodCatType}"
+            />
+            <Input
+                id="prodCatType"
+                required="true"
+                value="{EntryFormDataSourceModel>/ProductCatName}"
+                placeholder="Click to select value"
+                showValueHelp="true"
+                valueHelpRequest="cflForProdCat"
+            />
+
+            <Label
+                id="lightingCountryLbl"
+                text="{i18n>lightCountry}"
+            />
+            <Input
+                id="lightingCountry"
+                visible="false"
+                value="{EntryFormDataSourceModel>/CountryDescription}"
+                placeholder="Click to select value"
+                showValueHelp="true"
+                valueHelpRequest="cflForCountry"
+            />
+
+            <!-- <VBox id="childFragmentContainer" visible="false" /> -->
+
+            <!-- <VBox id="vbox" items="{SubProductFieldsModel>/value}">
+               
+                <Label text="{SubProductFieldsModel>/Lable}" />
+                <ComboBox id="lightingHolder" maxWidth="100%" valueState="None" visible="false" editable="true" enabled="true" value="{SubProductFieldsModel>/Value}" items="{ReqTypeModel>/LightHolder}" change="onSelectHolder">
+                <items>
+                    <core:Item key="{ReqTypeModel>EnumCode}" text="{ReqTypeModel>EnumDescription}" />
+                </items>
+                </ComboBox>
+            </VBox> -->
+
+            <Label
+                id="lightingHolderLbl"
+                text="{EntryFormDataSourceModel>/LabelHolder}"
+            />
+            <Input
+                id="lightingHolder"
+                value="{EntryFormDataSourceModel>/HolderName}"
+                tooltip="{EntryFormDataSourceModel>/HolderName}"
+                visible="{EntryFormDataSourceModel>/IsHolderVisible}"
+                placeholder="Click to select value"
+                showValueHelp="true"
+                valueHelpRequest="cflForHolder"
+            />
+
+            <Label
+                id="lightingShapeLbl"
+                text="{EntryFormDataSourceModel>/LabelShape}"
+            />
+            <Input
+                id="lightingShape"
+                value="{EntryFormDataSourceModel>/ShapeName}"
+                tooltip="{EntryFormDataSourceModel>/ShapeName}"
+                visible="{EntryFormDataSourceModel>/IsShapeVisible}"
+                placeholder="Click to select value"
+                showValueHelp="true"
+                valueHelpRequest="cflForHolder"
+            />
+
+            <Label
+                id="lightingCordLbl"
+                text="{EntryFormDataSourceModel>/LabelCord}"
+            />
+            <Input
+                id="lightingCord"
+                value="{EntryFormDataSourceModel>/CordName}"
+                tooltip="{EntryFormDataSourceModel>/CordName}"
+                visible="{EntryFormDataSourceModel>/IsCodeVisible}"
+                placeholder="Click to select value"
+                showValueHelp="true"
+                valueHelpRequest="cflForHolder"
+            />
+
+            <Label
+                id="matCategoryLbl"
+                labelFor="matCategory"
+                text="{i18n>matCategory}"
+            />
+            <Input
+                id="matCategory"
+                required="true"
+                value="{EntryFormDataSourceModel>/MCatName}"
+                placeholder="Click to select value"
+                showValueHelp="true"
+                valueHelpRequest="cflForCategory"
+            />
+
+            <Label
+                id="subCategoryLbl"
+                labelFor="subCategory"
+                text="{i18n>subCategory}"
+            />
+            <Input
+                id="subCategory"
+                required="true"
+                value="{EntryFormDataSourceModel>/SubCatName}"
+                placeholder="Click to select value"
+                showValueHelp="true"
+                valueHelpRequest="cflForSubCategory"
+            />
+
+            <Label
+                id="buyerLbl"
+                labelFor="buyer"
+                text="{i18n>buyer}"
+            />
+            <Input
+                id="buyer"
+                required="true"
+                value="{EntryFormDataSourceModel>/BuyerName}"
+                tooltip="{EntryFormDataSourceModel>/BuyerName}"
+                placeholder="Click to select value"
+                showValueHelp="true"
+                valueHelpRequest="cflForBuyer"
+            />
+
+            <Label
+                id="brandLbl"
+                labelFor="brand"
+                text="{i18n>brand}"
+            />
+            <ComboBox
+                id="brand"
+                required="true"
+                maxWidth="100%"
+                valueState="None"
+                visible="true"
+                editable="true"
+                enabled="true"
+                items="{ReqTypeModel>/Brand}"
+                value="{EntryFormDataSourceModel>/BrandName}"
+                selectionChange="onBrandChange"
+            >
+                <items>
+                    <core:Item
+                        key="{ReqTypeModel>BuyerBrandGuid}"
+                        text="{ReqTypeModel>BrandName}"
+                    />
+                </items>
+            </ComboBox>
+
+            <Label
+                id="catCodeLbl"
+                text="{i18n>catCode}"
+            />
+            <Input
+                id="catCode"
+                value="{EntryFormDataSourceModel>/CategoryCode}"
+                editable="false"
+            />
+
+            <Label
+                id="catUniqueNumLbl"
+                text="{i18n>catUniqueNum}"
+            />
+            <Input
+                id="catUniqueNum"
+                editable="false"
+                value="{EntryFormDataSourceModel>/CategoryUniqueNum}"
+            />
+
+            <Label
+                id="itemDescriptionLbl"
+                text="{i18n>itemDescription}"
+            />
+            <Input
+                id="itemDesc"
+                fieldWidth="100%"
+                tooltip="{EntryFormDataSourceModel>/ItemDesc}"
+                value="{EntryFormDataSourceModel>/ItemDesc}"
+                editable="true"
+            />
+
+            <Label
+                id="estimCostLbl"
+                text="{i18n>estCost}"
+            />
+            <Input
+                id="estimCost"
+                liveChange="onInputLiveChange"
+                value="{EntryFormDataSourceModel>/EstCostInDocCur}"
+                valueLiveUpdate="true"
+                description=""
+                fieldWidth="100%"
+                editable="true"
+                type="Number"
+            />
+
+            <Label
+                id="buyerCurrLbl"
+                text="{i18n>buyerCurr}"
+            />
+            <Input
+                id="buyerCurr"
+                value="{EntryFormDataSourceModel>/BuyerCur}"
+                description=""
+                fieldWidth="100%"
+                editable="false"
+            />
+
+            <Label
+                id="estimCostCurrLbl"
+                labelFor="estimCostCurr"
+                text="{i18n>estCostCurr}"
+            />
+            <Input
+                id="estimCostCurr"
+                value="{EntryFormDataSourceModel>/EstCostInINR}"
+                description=""
+                fieldWidth="100%"
+                editable="false"
+            />
+
+            <Label
+                id="excRateLbl"
+                text="{i18n>todayExch}"
+            />
+            <Input
+                id="excRate"
+                value="{EntryFormDataSourceModel>/ExchRate}"
+                description=""
+                fieldWidth="100%"
+                editable="false"
+            />
+
+            <Label
+                id="remarksLbl"
+                text="{i18n>remarks}"
+            />
+            <Input
+                id="clientRemarks"
+                tooltip="{EntryFormDataSourceModel>/Reamrks}"
+                type="Text"
+                value="{EntryFormDataSourceModel>/Reamrks}"
+                maxLength="2000"
+                description=""
+                fieldWidth="100%"
+            />
+
+            <Label
+                id="cadLevel"
+                labelFor="cadLevelCombo"
+                text="{i18n>cadLevel}"
+            />
+            <ComboBox
+                id="cadLevelCombo"
+                required="true"
+                maxWidth="100%"
+                valueState="None"
+                visible="true"
+                editable="true"
+                enabled="true"
+                value="{EntryFormDataSourceModel>/CADLevel}"
+                items="{ReqTypeModel>/CadLevel}"
+                change="onSelectCADLevel"
+            >
+                <items>
+                    <core:Item
+                        key="{ReqTypeModel>EnumCode}"
+                        text="{ReqTypeModel>EnumDescription}"
+                    />
+                </items>
+            </ComboBox>
+
+            <Label
+                id="ecnNoLbl"
+                text="{i18n>ecnNo}"
+            />
+            <Input
+                id="ecnNo"
+                enabled="true"
+                editable="true"
+                value="{EntryFormDataSourceModel>/ECNNo}"
+                description=""
+                fieldWidth="100%"
+                type="Number"
+            />
+
+            <Label
+                id="carNoLbl"
+                text="{i18n>carNo}"
+            />
+            <Input
+                id="carNo"
+                type="Number"
+                enabled="true"
+                editable="true"
+                value="{EntryFormDataSourceModel>/CarNo}"
+                description=""
+                fieldWidth="100%"
+            />
+
+            <Label
+                id="crfNoLbl"
+                labelFor="crfNo"
+                text="{i18n>crfNo}"
+            />
+
+            <Input
+                id="crfNo"
+                type="Number"
+                value="{EntryFormDataSourceModel>/CRFNo}"
+                description=""
+                fieldWidth="100%"
+                visible="false"
+                editable="true"
+            />
+            <Label
+                id="isCrfApprovalReqLbl"
+                labelFor="isCrfApprovalReq"
+                text="PDRM Meeting Required"
+            />
+            <RadioButtonGroup
+                id="CrfApprovalReqID"
+                columns="2"
+                select="onCrfApprovalGroupSelect"
+                selectedIndex="{= 
+                    ${EntryFormDataSourceModel>/CrfApprovalReq} === 'Y' ? 0 :
+                    ${EntryFormDataSourceModel>/CrfApprovalReq} === 'N' ? 1 :
+                    -1
+                }"
+                visible="false"
+                editable="false"
+            >
+                <RadioButton text="Yes" />
+                <RadioButton text="No" />
+            </RadioButtonGroup>
+            <Label
+                id="IsReCostingReqIDLbl"
+                labelFor="IsReCostingReqID"
+                text="Is Costing Required"
+            />
+            <RadioButtonGroup
+                id="IsReCostingReqID"
+                columns="2"
+                select="onCrfReCostingReqSelect"
+                selectedIndex="{= ${EntryFormDataSourceModel>/ReCostingReq} === 'Y' ? 0 : 1 }"
+                visible="false"
+                editable="false"
+            >
+                <RadioButton text="Yes" />
+                <RadioButton text="No" />
+            </RadioButtonGroup>
+            <Label
+                text="Costing Type"
+                required="true"
+            />
+            <ComboBox
+                id="CRFCostingTypeID"
+                required="true"
+                selectedKey="{EntryFormDataSourceModel>/CostingType}"
+                change="onCategoryChange"
+                visible="false"
+                editable="false"
+            >
+                <!-- <core:Item
+                    key="Rendering"
+                    text="Rendering"
+                /> -->
+                <core:Item
+                    key="CAD"
+                    text="CAD"
+                />
+                <core:Item
+                    key="CAD-OnlyCosting"
+                    text="CAD-Only For Costing"
+                />
+                <core:Item
+                    key="Sample"
+                    text="Sample Costing"
+                />
+            </ComboBox>
+            <Label
+                id="pdName"
+                labelFor="pdname"
+                text="PD Name"
+            />
+
+            <Input
+                id="pdname"
+                value="{EntryFormDataSourceModel>/PDName}"
+                description=""
+                fieldWidth="100%"
+                visible="true"
+                editable="true"
+            />
+            <Label
+                id="pdno"
+                labelFor="PDNo"
+                text="PD No"
+            />
+
+            <Input
+                id="PDNo"
+                value="{EntryFormDataSourceModel>/PDNo}"
+                description=""
+                fieldWidth="100%"
+                visible="true"
+                editable="true"
+            />
+            <Label
+                id="clientsession"
+                labelFor="ClientSeason"
+                text="Client Season"
+            />
+
+            <Input
+                id="ClientSeason"
+                value="{EntryFormDataSourceModel>/ClientSession}"
+                description=""
+                fieldWidth="100%"
+                visible="true"
+                editable="true"
+            />
+            <Label
+                id="fileuploadOnServer"
+                labelFor="IsfileuploadOnServer"
+            />
+
+            <CheckBox
+                id="IsfileuploadOnServer"
+                text="File Upload On Server"
+                selected="{
+        path: 'EntryFormDataSourceModel>/IsfileuploadOnServer',
+        formatter: '.formatYNToBoolean'
+    }"
+                required="true"
+                select="onFileUploadSelect"
+                editable="true"
+                visible="true"
+            />
+           
+        </f:content>
+    </f:SimpleForm>
+</core:FragmentDefinition>

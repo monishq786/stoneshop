@@ -1,0 +1,71 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:u="sap.ui.unified"
+    xmlns:commons="sap.suite.ui.commons"
+>
+    <ScrollContainer
+        id="caddetail_scrollImportedcontainerMain"
+        width="100%"
+        height="auto"
+        horizontal="true"
+        vertical="true"
+        focusable="true"
+    >
+        <Table
+            items="{
+                path: 'EntryFormDataSourceModel>/ImportedAccessory',
+                sorter: {
+                    path: 'SNo'
+                }
+            }"
+            width="100%"
+            id="caddetail_ImportedAccessoryTable"
+            class="sapUiSizeCompact"
+            inset="true"
+            sticky="ColumnHeaders,HeaderToolbar"
+            showSeparators="All"
+            showNoData="true"
+        >
+            <columns>
+                <Column width="10rem">
+                    <Label
+                        text="Item Name"
+                        labelFor="caddetail_itemname"
+                    />
+                </Column>
+                <Column width="10rem">
+                    <Label
+                        text="Item Code"
+                        labelFor="caddetail_itemcode"
+                    />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem vAlign="Middle">
+                    <cells>
+                        <!-- Product Code -->
+                        <Input
+                            id="caddetail_itemcode"
+                            width="10rem"
+                            value="{EntryFormDataSourceModel>ItemCode}"
+                            editable="false"
+                            required="true"
+                        />
+
+                        <!-- Product Name -->
+                        <Input
+                            id="caddetail_itemname"
+                            width="10rem"
+                            value="{EntryFormDataSourceModel>ItemName}"
+                            editable="false"
+                            required="true"
+                        />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </ScrollContainer>
+</core:FragmentDefinition>
