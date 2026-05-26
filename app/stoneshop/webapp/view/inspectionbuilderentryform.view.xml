@@ -1,0 +1,767 @@
+<mvc:XMLView controllerName="modreportcontroller.inspectionbuilderentryform"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:layout="sap.ui.layout"
+    xmlns:dnd="sap.ui.core.dnd"
+    xmlns:grid="sap.ui.layout.cssgrid"
+    xmlns:dnd-grid="sap.f.dnd" height="100%">
+    <f:DynamicPage>
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>Ins_FormArchitect} {formModel>/label}" />
+                </f:heading>
+                <f:actions>
+                    <Button text="{i18n>Ins_Back}" type="Emphasized" press="onPressBack" icon="sap-icon://nav-back"/>
+                    <Button text="{i18n>Ins_GenJson}" type="Emphasized" press="_getGeneratedJSON" icon="sap-icon://attachment-html"/>
+                    <Button text="{i18n>Ins_Save}" type="Emphasized" press="onSave" icon="sap-icon://save"/>
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <layout:ResponsiveSplitter>
+                <layout:rootPaneContainer>
+                    <layout:PaneContainer>
+
+                        <!-- Left -->
+                        <layout:SplitPane>
+                            <VBox class="leftSidebar sapUiSmallMargin">
+
+                                <!-- STRUCTURE -->
+                                <Text text="{i18n>Ins_Structure}" class="sideHeader"/>
+
+                                <f:GridList id="gridAddSection" class="sapUiTinyMargin" width="90%">
+
+                                    <f:GridListItem type="Active" press="onPressAddSection" class="sideItem sideItemPrimary">                                        <!--  MOVE CSS HERE -->
+
+                                        <HBox justifyContent="SpaceBetween" alignItems="Center">
+
+                                            <HBox alignItems="Center">
+                                                <VBox class="iconBox iconPrimary">
+                                                    <core:Icon src="sap-icon://menu2"/>
+                                                </VBox>
+
+                                                <Text text="{i18n>Ins_NewSection}" class="itemText"/>
+                                            </HBox>
+
+                                            <core:Icon src="sap-icon://add" class="addIcon"/>
+
+                                        </HBox>
+
+                                    </f:GridListItem>
+
+                                </f:GridList>
+                                <!-- GENERAL COMPONENTS -->
+                                <Text text="{i18n>Ins_GENERAL}" class="sideHeader sapUiMarginTopLarge"/>
+
+                                <f:GridList id="gridAddField" class="sapUiTinyMargin" width="90%">
+
+                                    <f:GridListItem type="Active" press="onPressAddField" class="sideItem sideItemPrimary">                                        <!--  MOVE CSS HERE -->
+
+                                        <HBox justifyContent="SpaceBetween" alignItems="Center">
+
+                                            <HBox alignItems="Center">
+                                                <VBox class="iconBox iconInfo">
+                                                    <core:Icon src="sap-icon://text-align-left"/>
+                                                </VBox>
+
+                                                <Text text="{i18n>Ins_FormField}" class="itemText" />
+                                            </HBox>
+
+                                            <core:Icon src="sap-icon://add" class="addIcon"/>
+
+                                        </HBox>
+
+                                    </f:GridListItem>
+
+                                </f:GridList>
+
+                                <f:GridList id="gridAddTable" class="sapUiTinyMargin" width="90%">
+
+                                    <f:GridListItem type="Active" press="onPressAddTable" class="sideItem sideItemPrimary">                                        <!--  MOVE CSS HERE -->
+
+                                        <HBox justifyContent="SpaceBetween" alignItems="Center">
+
+                                            <HBox alignItems="Center">
+                                                <VBox class="iconBox iconSuccess">
+                                                    <core:Icon src="sap-icon://table-view"/>
+                                                </VBox>
+
+                                                <Text text="{i18n>Ins_GenericTable}" class="itemText"/>
+                                            </HBox>
+
+                                            <core:Icon src="sap-icon://add" class="addIcon"/>
+
+                                        </HBox>
+
+                                    </f:GridListItem>
+
+                                </f:GridList>
+
+                            </VBox>
+                        </layout:SplitPane>
+
+                        <!-- Center -->
+                        <layout:SplitPane requiredParentWidth="500">
+                            <!-- <ScrollContainer height="100%" vertical="true" horizontal="false" class="canvasScroll"> -->
+
+                            <VBox class="sapUiMediumMargin">
+                                <f:Card id="formCard" semanticRole="ListItem" press="onFormCardPress" class="customManifestCard">
+
+                                    <f:customData>
+                                        <core:CustomData key="path" value="/" />
+                                    </f:customData>
+
+
+                                    <!-- Card Content -->
+                                    <f:content>
+                                        <VBox class="sapUiSmallMargin">
+
+                                            <Text text="{i18n>Ins_GLOBAL}" class="manifestBadge"/>
+
+                                            <Title text="{formModel>/label}" level="H1" class="manifestTitle"/>
+
+                                            <HBox class="manifestMeta" alignItems="Center">
+
+                                                <HBox class="metaChip">
+                                                    <Text text="{i18n>Ins_CODE} {formModel>/code}"/>
+                                                </HBox>
+
+                                                <HBox class="metaChip">
+                                                    <Text text="V{formModel>/version}"/>
+                                                </HBox>
+
+                                            </HBox>
+
+                                        </VBox>
+                                    </f:content>
+
+                                </f:Card>
+
+                                <!-- ================= SECTIONS CANVAS ================= -->
+                                <f:GridList items="{formModel>/sections}" class="sectionGridList" growing="true">
+
+                                    <f:customLayout>
+                                        <grid:GridBasicLayout gridTemplateColumns="1fr" gridAutoFlow="Row" gridGap="16px" />
+                                    </f:customLayout>
+
+                                    <!--  Drag & Drop -->
+                                    <f:dragDropConfig>
+                                        <dnd:DragInfo sourceAggregation="items"/>
+                                        <dnd:DropInfo targetAggregation="items" dropPosition="Between" drop="onDropSection"/>
+                                    </f:dragDropConfig>
+
+
+                                    <f:items>
+                                        <!--  Grid Item -->
+                                        <f:GridListItem id="addSectionCard" press="onSectionCardPress" type="Active" class="gridCardItem">
+
+                                            <VBox class="canvasWrapperFullHeight" width="100%">
+
+                                                <!-- HEADER -->
+                                                <HBox class="sectionHeader" alignItems="Center" width="100%">
+                                                    <VBox class="iconBox iconInfo">
+                                                        <core:Icon src="sap-icon://header"/>
+                                                    </VBox>
+                                                    <!-- Spacer pushes delete icon to right corner -->
+                                                    <VBox class="sectionTitleBox">
+                                                        <Text text="{formModel>name}" class="sectionTitle"/>
+                                                        <Text text="{formModel>description}" class="sectionSubtitle"/>
+                                                    </VBox>
+                                                    <ToolbarSpacer/>
+
+                                                </HBox>
+
+                                                <!-- ================= FIELDS LIST ================= -->
+                                                <f:GridList items="{
+        path: 'formModel>fields',
+        templateShareable: false
+    }" class="fieldGridList">
+
+                                                    <f:customLayout>
+                                                        <grid:GridBasicLayout gridTemplateColumns="1fr" gridAutoFlow="Row" gridGap="16px" />
+                                                    </f:customLayout>
+
+
+                                                    <!--  Drag Drop -->
+                                                    <f:dragDropConfig>
+                                                        <dnd:DragInfo sourceAggregation="items"/>
+                                                        <dnd:DropInfo targetAggregation="items" dropPosition="Between" drop="onDropField"/>
+                                                    </f:dragDropConfig>
+
+                                                    <f:items>
+                                                        <f:GridListItem id="addFieldCard" type="Active" class="gridCardItem" press="onPressFieldCard">
+
+                                                            <HBox alignItems="Center">
+                                                                <VBox class="iconBox iconInfo">
+                                                                    <core:Icon src="sap-icon://text-align-left"/>
+                                                                </VBox>
+
+                                                                <VBox class="fieldText">
+                                                                    <Text text="{formModel>label}" class="fieldTitle"/>
+                                                                    <Text text="{formModel>name}" class="fieldSubtitle"/>
+                                                                </VBox>
+
+                                                                <Toolbar class="sapUiLargeMarginBegin noToolbarBorder">
+                                                                    <ToolbarSpacer/>
+                                                                    <Text text="{formModel>dataType}"/>
+
+                                                                </Toolbar>
+
+                                                            </HBox>
+                                                            <OverflowToolbar design="Solid" class="sapContrast noToolbarBorder">
+                                                                <ToolbarSpacer />
+                                                                <Button icon="sap-icon://delete" press="onPressDeleteField" type="Reject"/>
+                                                            </OverflowToolbar>
+                                                        </f:GridListItem>
+                                                    </f:items>
+                                                </f:GridList>
+
+                                                <!-- ================= TABLE LIST ================= -->
+                                                <f:GridList items="{
+                                                                        path: 'formModel>tables',
+                                                                        templateShareable: false
+                                                                        }" class="tableGridList">
+
+                                                    <f:customLayout>
+                                                        <grid:GridBasicLayout gridTemplateColumns="1fr" gridAutoFlow="Row" gridGap="16px" />
+                                                    </f:customLayout>
+
+
+                                                    <f:dragDropConfig>
+                                                        <dnd:DragInfo sourceAggregation="items"/>
+                                                        <dnd:DropInfo targetAggregation="items" dropPosition="Between" drop="onDropTable"/>
+                                                    </f:dragDropConfig>
+
+                                                    <f:items>
+                                                        <f:GridListItem id="addTable" class="tableCard" press="onPressTableCard" type="Active">
+
+                                                            <VBox>
+
+                                                                <HBox alignItems="Center">
+                                                                    <VBox class="iconBox iconSuccess">
+                                                                        <core:Icon src="sap-icon://table-view"/>
+                                                                    </VBox>
+
+                                                                    <VBox class="fieldText">
+                                                                        <Text text="{formModel>name}" class="fieldTitle"/>
+                                                                    </VBox>
+
+                                                                </HBox>
+
+                                                                <!-- ================= COLUMNS LIST ================= -->
+                                                                <f:GridList items="{
+                                                                                         path: 'formModel>columns',
+                                                                                         templateShareable: false
+                                                                                       }" class="columnGridList">
+                                                                    <f:customLayout>
+                                                                        <grid:GridBasicLayout gridTemplateColumns="repeat(auto-fill, 35%)" gridAutoFlow="Row" gridGap="0.5rem" />
+                                                                    </f:customLayout>
+                                                                    <f:dragDropConfig>
+                                                                        <dnd:DragInfo sourceAggregation="items"/>
+                                                                        <dnd:DropInfo targetAggregation="items" dropPosition="Between" drop="onDropColumn"/>
+                                                                    </f:dragDropConfig>
+
+                                                                    <f:items>
+                                                                        <f:GridListItem id="addColumn" class="tableCard" press="onPressColumn" type="Active">
+                                                                            <HBox alignItems="Center">
+                                                                                <VBox class="iconBox iconSuccess">
+                                                                                    <core:Icon src="sap-icon://provision"/>
+                                                                                </VBox>
+
+                                                                                <VBox class="fieldText">
+                                                                                    <Title text="{formModel>label}" wrapping="true" class="fieldTitle"/>
+                                                                                </VBox>
+
+                                                                            </HBox>
+
+
+                                                                            <OverflowToolbar design="Solid" class="sapContrast noToolbarBorder">
+                                                                                <ToolbarSpacer />
+                                                                                <Button icon="sap-icon://decline" type="Transparent" press="onPressDeleteColumn"/>
+                                                                            </OverflowToolbar>
+                                                                        </f:GridListItem>
+                                                                    </f:items>
+
+                                                                </f:GridList>
+
+                                                            </VBox>
+                                                            <OverflowToolbar design="Solid" class="sapContrast noToolbarBorder">
+                                                                <ToolbarSpacer />
+                                                                <Button text="Add Column" press="onPressAddColumn" icon="sap-icon://sys-add" type="Emphasized"/>
+                                                                <Button icon="sap-icon://delete" press="onPressDeleteTable" type="Reject"/>
+                                                            </OverflowToolbar>
+
+                                                        </f:GridListItem>
+                                                    </f:items>
+
+                                                </f:GridList>
+
+                                                <Toolbar design="Transparent" class="sapUiSmallMarginTop noToolbarBorder">
+                                                    <ToolbarSpacer/>
+                                                    <Button text="{i18n>Ins_AddField}" type="Emphasized" icon="sap-icon://add" press="onPressAddField"/>
+                                                    <Button text="{i18n>Ins_AddTable}" type="Emphasized" icon="sap-icon://add" class="sapUiMarginBeginSmall" press="onPressAddTable"/>
+                                                    <Button id="removeSection" text="{i18n>Ins_Delete}" type="Reject" icon="sap-icon://delete" press="onDeleteSection"/>
+                                                </Toolbar>
+                                            </VBox>
+                                        </f:GridListItem>
+                                    </f:items>
+                                </f:GridList>
+                            </VBox>
+                            <!-- </ScrollContainer> -->
+                        </layout:SplitPane>
+
+                        <!-- Right -->
+                        <layout:SplitPane>
+                            <VBox id="rightPanelRoot">
+                                <!-- ================= FORM CONFIG ================= -->
+                                <VBox id="formConfigBox" class="configRoot sapUiSmallMargin">
+                                    <!-- CONFIG HEADER -->
+                                    <HBox alignItems="Center" class="configHeader">
+                                        <core:Icon src="sap-icon://action-settings" class="configIcon"/>
+                                        <Text text="{i18n>Ins_CONFIG}" class="configTitle"/>
+                                    </HBox>
+
+                                    <!-- PROGRAMMATIC UID -->
+                                    <VBox class="uidContainer sapUiMarginTopMedium">
+                                        <Text text="{i18n>Ins_PROGRAMMATICUID}" class="sectionLabel"/>
+                                        <Text text="{formModel>ID}" class="uidValue"/>
+                                    </VBox>
+
+                                    <!-- BASIC IDENTITY -->
+                                    <Text text="{i18n>Ins_BASICIDENTITY}" class="sectionHeader"/>
+
+                                    <VBox class="cardContainer">
+                                        <VBox class="fieldGroup">
+                                            <Text text="{i18n>Ins_OBJECTKEY}" class="fieldLabel"/>
+                                            <Input value="{formModel>name}" editable="false">
+                                                <customData>
+                                                    <core:CustomData key="property" value="name"/>
+                                                </customData>
+                                            </Input>
+                                        </VBox>
+                                        <VBox class="fieldGroup">
+                                            <Text text="{i18n>Ins_USERLABEL}" class="fieldLabel"/>
+
+
+                                            <Input id="labelInputForm" value="{formModel>label}" liveChange=".onLiveChangeForInput">
+
+                                                <customData>
+                                                    <core:CustomData key="property" value="name"/>
+                                                </customData>
+                                            </Input>
+                                        </VBox>
+                                    </VBox>
+
+                                    <!-- Template LAYOUT -->
+                                    <Text text="{i18n>Ins_TEMPLATE}" class="sectionHeader sapUiMarginTopMedium"/>
+
+                                    <VBox class="cardContainer">
+                                        <Label text="{i18n>Ins_TemplateCode}" labelFor="formTemCode"/>
+                                        <Input id="formTemCode" value="{formModel>code}" liveChange=".onLiveChangeForNormalCase" required="true">
+
+                                            <customData>
+                                                <core:CustomData key="property" value="code"/>
+                                            </customData>
+
+                                        </Input>
+                                        <Label text="{i18n>Ins_IterationVersion}"/>
+                                        <Input id="formIteVersion" value="{formModel>version}" liveChange=".onLiveChangeForInput">
+
+                                            <customData>
+                                                <core:CustomData key="property" value="version"/>
+                                            </customData>
+
+                                        </Input>
+                                        <Label text="{i18n>Ins_ApprovalTemp}"/>
+                                        <Input id="formIteTemplate" type="Text" value="{formModel>TemplateName}" showValueHelp="true" valueHelpRequest="cflForApprovalTemplate" required="true" liveChange="onChangeTemplate" />
+                                        <Label text="{i18n>Ins_IsActive}"/>
+                                        <Switch state="{formModel>/isActive}"/>
+                                    </VBox>
+                                </VBox>
+
+                                <!-- ================= SECTION CONFIG ================= -->
+                                <VBox id="sectionConfigBox" class="configRoot sapUiMediumMargin">
+
+                                    <HBox alignItems="Center" class="configHeader">
+                                        <core:Icon src="sap-icon://action-settings" class="configIcon"/>
+                                        <Text text="{i18n>Ins_CONFIG}" class="configTitle"/>
+                                    </HBox>
+
+                                    <VBox class="uidContainer sapUiMarginTopMedium">
+                                        <Text text="{i18n>Ins_PROGRAMMATICUID}" class="sectionLabel"/>
+                                        <Text text="{formModel>ID}" class="uidValue"/>
+                                    </VBox>
+
+                                    <Text text="{i18n>Ins_BASICIDENTITY}" class="sectionHeader"/>
+
+                                    <VBox class="cardContainer">
+                                        <VBox class="fieldGroup">
+                                            <Text text="{i18n>Ins_OBJECTKEY}" class="fieldLabel"/>
+                                            <Input value="{formModel>name}" editable="false"/>
+                                        </VBox>
+
+                                        <VBox class="fieldGroup">
+                                            <Text text="{i18n>Ins_USERLABEL}" class="fieldLabel"/>
+
+
+                                            <Input id="nameInput" value="{formModel>label}" liveChange=".onLiveChangeForNormalCase">
+
+                                                <customData>
+                                                    <core:CustomData key="property" value="name"/>
+                                                </customData>
+
+                                            </Input>
+
+
+                                        </VBox>
+                                    </VBox>
+
+                                    <Text text="{i18n>Ins_SECTIONLAYOUT}" class="sectionHeader sapUiMarginTopMedium"/>
+
+                                    <VBox class="cardContainer">
+                                        <Select width="100%" selectedKey="{formModel>renderType}">
+                                            <items>
+                                                <core:Item key="FORM" text="FORM"/>
+                                                <core:Item key="CHECKLIST" text="CHECKLIST"/>
+                                            </items>
+                                        </Select>
+
+
+                                        <TextArea id="userDescription" value="{formModel>description}" liveChange=".onLiveChangeForInput" rows="3" placeholder="Basic description" width="100%">
+                                            <customData>
+                                                <core:CustomData key="property" value="description"/>
+                                            </customData>
+                                        </TextArea>
+                                    </VBox>
+                                </VBox>
+
+                                <!-- ================= FIELD CONFIG ================= -->
+                                <VBox id="fieldConfigBox" class="configRoot sapUiMediumMargin">
+
+                                    <HBox alignItems="Center" class="configHeader">
+                                        <core:Icon src="sap-icon://action-settings" class="configIcon"/>
+                                        <Text text="{i18n>Ins_CONFIG}" class="configTitle"/>
+                                    </HBox>
+
+                                    <VBox class="uidContainer sapUiMarginTopMedium">
+                                        <Text text="{i18n>Ins_PROGRAMMATICUID}" class="sectionLabel"/>
+                                        <Text text="{formModel>ID}" class="uidValue"/>
+                                    </VBox>
+
+                                    <Text text="{i18n>Ins_BASICIDENTITY}" class="sectionHeader"/>
+
+                                    <VBox class="cardContainer">
+                                        <VBox class="fieldGroup">
+                                            <Text text="{i18n>Ins_OBJECTKEY}" class="fieldLabel"/>
+                                            <Input value="{formModel>name}" editable="false"/>
+                                        </VBox>
+
+                                        <VBox class="fieldGroup">
+                                            <Text text="{i18n>Ins_USERLABEL}" class="fieldLabel"/>
+
+
+                                            <Input id="nameInputFiled" value="{formModel>label}" liveChange=".onLiveChangeForInput">
+
+                                                <customData>
+                                                    <core:CustomData key="property" value="name"/>
+                                                </customData>
+                                            </Input>
+                                        </VBox>
+                                    </VBox>
+
+                                    <Text text="{i18n>Ins_DATASCHEMA}" class="sectionHeader sapUiMarginTopMedium"/>
+
+                                    <VBox class="cardContainer">
+                                        <Label text="{i18n>Ins_INPUTWIDGET}" />
+                                        <Select width="100%" selectedKey="{formModel>inputType}" change=".onInputTypeChange">
+                                            <items>
+                                                <core:Item key="TEXT" text="Input"/>
+                                                <core:Item key="DATE" text="DatePicker"/>
+                                                <core:Item key="DROPDOWN" text="Dropdown"/>
+                                                <core:Item key="CFL" text="CFL"/>
+                                                <core:Item key="TEXTAREA" text="Text Area"/>
+                                                <core:Item key="YES_NO" text="Yes or No"/>
+                                                <core:Item key="PASS_FAIL" text="Pass or Fail"/>
+                                            </items>
+                                        </Select>
+                                        <VBox visible="{= ${formModel>inputType} === 'CFL' || ${formModel>inputType} === 'DROPDOWN' }">
+                                            <Label text="{i18n>Ins_API}" />
+                                            <Input id="nameInputAPI" value="{formModel>metaData/api}">
+
+                                                <customData>
+                                                    <core:CustomData key="property" value="api"/>
+                                                </customData>
+
+                                            </Input>
+                                            <Label text="{i18n>Ins_KEY}" />
+                                            <Input id="nameInputKey" value="{formModel>metaData/key}">
+
+                                                <customData>
+                                                    <core:CustomData key="property" value="key"/>
+                                                </customData>
+
+                                            </Input>
+                                            <Label text="{i18n>Ins_VALUE}" />
+                                            <Input id="nameInputValue" value="{formModel>metaData/value}">
+
+                                                <customData>
+                                                    <core:CustomData key="property" value="value"/>
+                                                </customData>
+
+                                            </Input>
+                                        </VBox>
+
+                                        <Label text="{i18n>Ins_NATIVEDATA}" />
+                                        <Select width="100%" selectedKey="{formModel>dataType}">
+                                            <items>
+                                                <core:Item key="STRING" text="String"/>
+                                                <core:Item key="INT" text="Integer"/>
+                                                <core:Item key="DATE" text="Date"/>
+                                                <core:Item key="BOOLEAN" text="Boolean"/>
+                                            </items>
+                                        </Select>
+
+                                        <Label text="{i18n>Ins_INITIALVALUE}" />
+                                        <Input id="nameInputInitial" value="{formModel>defaultValue}">
+
+                                            <customData>
+                                                <core:CustomData key="property" value="defaultValue"/>
+                                            </customData>
+
+                                        </Input>
+
+                                        <HBox alignItems="Center" class="sapUiTinyMarginBottom" justifyContent="SpaceBetween">
+                                            <Label text="{i18n>Ins_Editable}" />
+                                            <ToolbarSpacer />
+                                            <Switch state="{formModel>isEditable}" />
+                                        </HBox>
+
+                                        <HBox alignItems="Center" class="sapUiTinyMarginBottom" justifyContent="SpaceBetween">
+                                            <Label text="{i18n>Ins_Mandatory}" />
+                                            <Switch state="{formModel>isMandatory}" />
+                                        </HBox>
+
+                                        <HBox alignItems="Center" class="sapUiTinyMarginBottom" justifyContent="SpaceBetween">
+                                            <Label text="{i18n>Ins_Visible}" />
+                                            <Switch state="{formModel>isVisibleOnPrint}" />
+                                        </HBox>
+
+                                    </VBox>
+                                </VBox>
+
+                                <!-- ================= Table CONFIG ================= -->
+                                <VBox id="tableConfigBox" class="configRoot sapUiMediumMargin">
+
+                                    <HBox alignItems="Center" class="configHeader">
+                                        <core:Icon src="sap-icon://action-settings" class="configIcon"/>
+                                        <Text text="{i18n>Ins_CONFIG}" class="configTitle"/>
+                                    </HBox>
+
+                                    <VBox class="uidContainer sapUiMarginTopMedium">
+                                        <Text text="{i18n>Ins_PROGRAMMATICUID}" class="sectionLabel"/>
+                                        <Text text="{formModel>ID}" class="uidValue"/>
+                                    </VBox>
+
+                                    <Text text="{i18n>Ins_BASICIDENTITY}" class="sectionHeader"/>
+
+                                    <VBox class="cardContainer">
+                                        <VBox class="fieldGroup">
+                                            <Text text="{i18n>Ins_OBJECTKEY}" class="fieldLabel"/>
+                                            <Input value="{formModel>name}" liveChange=".onLiveChangeForNormalCase">
+                                                <customData>
+                                                    <core:CustomData key="property" value="name"/>
+                                                </customData>
+                                            </Input>
+                                        </VBox>
+
+                                        <Text text="{i18n>Ins_TABLELOGIC}" class="fieldLabel"/>
+
+                                        <VBox class="fieldGroup">
+
+                                            <!-- Container Card -->
+                                            <VBox class="tableLogicCard sapUiSmallMarginTop">
+
+                                                <!-- ===== Min / Max Rows ===== -->
+                                                <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+
+                                                    <!-- Min Rows -->
+                                                    <VBox width="48%">
+                                                        <Text text="{i18n>Ins_MINROWS}" class="tableLogicLabel"/>
+                                                        <Input value="{formModel>minRows}" type="Number" liveChange=".onLiveChangeForInput">
+                                                            <customData>
+                                                                <core:CustomData key="property" value="minRows"/>
+                                                            </customData>
+                                                        </Input>
+                                                    </VBox>
+
+                                                    <!-- Max Rows -->
+                                                    <VBox width="48%">
+                                                        <Text text="{i18n>Ins_MAXROWS}" class="tableLogicLabel"/>
+                                                        <Input value="{formModel>maxRows}" type="Number" placeholder="∞" liveChange=".onLiveChangeForInput">
+                                                            <customData>
+                                                                <core:CustomData key="property" value="maxRows"/>
+                                                            </customData>
+                                                        </Input>
+                                                    </VBox>
+
+                                                </HBox>
+
+                                                <!-- ===== Allow Add ===== -->
+                                                <HBox alignItems="Center" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                                    <Text text="{i18n>Ins_AllowAdd}" class="tableLogicSwitchLabel"/>
+                                                    <Switch state="{formModel>allowAddRow}" change=".onSwitchChange">
+                                                        <customData>
+                                                            <core:CustomData key="property" value="allowAddRow"/>
+                                                        </customData>
+                                                    </Switch>
+                                                </HBox>
+
+                                                <!-- ===== Allow Delete ===== -->
+                                                <HBox alignItems="Center" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                                    <Text text="{i18n>Ins_AllowDelete}" class="tableLogicSwitchLabel"/>
+                                                    <Switch state="{formModel>allowDeleteRow}" change=".onSwitchChange">
+                                                        <customData>
+                                                            <core:CustomData key="property" value="allowDeleteRow"/>
+                                                        </customData>
+                                                    </Switch>
+                                                </HBox>
+
+                                                <!-- ===== Allow Edit ===== -->
+                                                <HBox alignItems="Center" justifyContent="SpaceBetween">
+                                                    <Text text="{i18n>Ins_AllowEdit}" class="tableLogicSwitchLabel"/>
+                                                    <Switch state="{formModel>allowEditRow}" change=".onSwitchChange">
+                                                        <customData>
+                                                            <core:CustomData key="property" value="allowEditRow"/>
+                                                        </customData>
+                                                    </Switch>
+                                                </HBox>
+
+                                            </VBox>
+                                        </VBox>
+                                    </VBox>
+                                </VBox>
+
+                                <!-- ================= COLUMNS CONFIG ================= -->
+                                <VBox id="columnConfigBox" class="configRoot sapUiMediumMargin">
+
+                                    <HBox alignItems="Center" class="configHeader">
+                                        <core:Icon src="sap-icon://action-settings" class="configIcon"/>
+                                        <Text text="{i18n>Ins_CONFIG}" class="configTitle"/>
+                                    </HBox>
+
+                                    <VBox class="uidContainer sapUiMarginTopMedium">
+                                        <Text text="{i18n>Ins_PROGRAMMATICUID}" class="sectionLabel"/>
+                                        <Text text="{formModel>ID}" class="uidValue"/>
+                                    </VBox>
+
+                                    <Text text="{i18n>Ins_BASICIDENTITY}" class="sectionHeader"/>
+
+                                    <VBox class="cardContainer">
+                                        <VBox class="fieldGroup">
+                                            <Text text="{i18n>Ins_OBJECTKEY}" class="fieldLabel"/>
+                                            <Input value="{formModel>name}" editable="false"/>
+                                        </VBox>
+
+                                        <VBox class="fieldGroup">
+                                            <Text text="{i18n>Ins_USERLABEL}" class="fieldLabel"/>
+                                            <Input id="nameInputColumn" value="{formModel>label}" liveChange=".onLiveChangeForInput">
+                                                <customData>
+                                                    <core:CustomData key="property" value="name"/>
+                                                </customData>
+                                            </Input>
+                                        </VBox>
+                                    </VBox>
+
+                                    <Text text="{i18n>Ins_DATASCHEMA}" class="sectionHeader sapUiMarginTopMedium"/>
+
+                                    <VBox class="cardContainer">
+                                        <Label text="{i18n>Ins_INPUTWIDGET}" />
+                                        <Select width="100%" selectedKey="{formModel>inputType}" change=".onInputTypeChange">
+                                            <items>
+                                                <core:Item key="TEXT" text="Input"/>
+                                                <core:Item key="DATE" text="DatePicker"/>
+                                                <core:Item key="DROPDOWN" text="Dropdown"/>
+                                                <core:Item key="CFL" text="CFL"/>
+                                                <core:Item key="TEXTAREA" text="Text Area"/>
+                                                <core:Item key="YES_NO" text="Yes or No"/>
+                                                <core:Item key="PASS_FAIL" text="Pass or Fail"/>
+                                            </items>
+                                        </Select>
+                                        <VBox visible="{= ${formModel>inputType} === 'CFL' || ${formModel>inputType} === 'DROPDOWN' }">
+                                            <Label text="{i18n>Ins_API}" />
+                                            <Input id="columnInputAPI" value="{formModel>metaData/api}">
+
+                                                <customData>
+                                                    <core:CustomData key="property" value="api"/>
+                                                </customData>
+
+                                            </Input>
+                                            <Label text="{i18n>Ins_KEY}" />
+                                            <Input id="columnInputKey" value="{formModel>metaData/key}">
+
+                                                <customData>
+                                                    <core:CustomData key="property" value="key"/>
+                                                </customData>
+
+                                            </Input>
+                                            <Label text="{i18n>Ins_VALUE}" />
+                                            <Input id="columnInputValue" value="{formModel>metaData/value}">
+
+                                                <customData>
+                                                    <core:CustomData key="property" value="value"/>
+                                                </customData>
+
+                                            </Input>
+                                        </VBox>
+
+                                        <Label text="{i18n>Ins_NATIVEDATA}" />
+                                        <Select width="100%" selectedKey="{formModel>dataType}">
+                                            <items>
+                                                <core:Item key="STRING" text="String"/>
+                                                <core:Item key="INT" text="Integer"/>
+                                                <core:Item key="DATE" text="Date"/>
+                                                <core:Item key="BOOLEAN" text="Boolean"/>
+                                            </items>
+                                        </Select>
+
+                                        <Label text="{i18n>Ins_INITIALVALUE}" />
+
+                                        <Input id="nameInputIniColumn" value="{formModel>defaultValue}">
+
+                                            <customData>
+                                                <core:CustomData key="property" value="defaultValue"/>
+                                            </customData>
+
+                                        </Input>
+
+                                        <HBox alignItems="Center" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                            <Label text="{i18n>Ins_Editable}" class="sapUiTinyMarginEnd"/>
+                                            <Switch state="{formModel>isEditable}" />
+
+                                        </HBox>
+                                        <HBox alignItems="Center" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                            <Label text="{i18n>Ins_Mandatory}" class="sapUiTinyMarginEnd"/>
+                                            <Switch state="{formModel>isMandatory}" />
+
+                                        </HBox>
+                                        <HBox alignItems="Center" justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                            <Label text="{i18n>Ins_Visible}" class="sapUiTinyMarginEnd"/>
+                                            <Switch state="{formModel>isVisibleOnPrint}" type="AcceptReject"/>
+
+                                        </HBox>
+                                    </VBox>
+                                </VBox>
+                            </VBox>
+                        </layout:SplitPane>
+
+                    </layout:PaneContainer>
+                </layout:rootPaneContainer>
+            </layout:ResponsiveSplitter>
+        </f:content>
+    </f:DynamicPage>
+</mvc:XMLView>
